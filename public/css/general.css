@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Montserrat:wght@100..900&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  font-family: montserrat;
+}
+
+:root {
+  --primary-color: #ffe602;
+  --text-color: black;
+  --footer-color: black;
+
+  --image-border-radius: 10px; 
+
+  --header-fonts: 36px;
+  --header-fonts-2: 32px;
+  --text-fonts: 14px;
+
+  --image-card-color-1: #d9d9d925;
+  --image-card-color-2: #ececec25;
+
+
+  --box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --box-shadow-2: 0px 4px 4px 0 white;
+
+  --transition: all 300ms ease-in-out;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Montserrat;
+  margin: auto;
+}
+
+section {
+  padding: 8px;
+}
+
+.btn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-size: var(--text-fonts);
+  border-radius: 50px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  outline: none;
+}
+
+.order {
+  border-radius: 5px;
+  align-items: center;
+}
+
+.view_btn {
+  background-color: black;
+  color: white;
+}
+
+h1, h2, h3, h4 {
+  font-family: Montserrat;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+h1, h2 {
+  padding: 40px;
+}
+
+p {
+  text-align: start;
+  font-size: var(--text-fonts);
+}
+
+section h2 {
+  text-align: center;
+  font-size: var(--header-fonts-2);
+  font-weight: 800;
+  color: #c89c02;
+  padding: 20px;
+  letter-spacing: 0px;
+  margin-bottom: 4px;
+}
+
+
+section p {
+  width: 70%;
+  margin: auto;
+  padding: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 70%;
+  gap: 10px;
+  margin: auto auto;
+}
+
+form input, form textarea {
+  padding: 15px;
+  border-radius: 3px;
+  border: solid 1px #ccc;
+}
+
+.form button {
+  margin: auto;
+}
+
+.display_image {
+  width: 290px;
+  height: 379px;
+  border-radius: var(--image-border-radius);
+}
+
+.footer {
+  background-color: var(--footer-color);
+  padding: 20px;
+  margin-top: 20px;
+  bottom: 0;
+}
+

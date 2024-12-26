@@ -1,0 +1,9 @@
+node_modules
+
+ <!-- <% products.forEach(product => { %>
+      <li>
+        <a href="/products/<%= product.id %>">
+          <%= product.name %> - $<%= product.price %>
+        </a>
+      </li>
+    <% }) %> -->

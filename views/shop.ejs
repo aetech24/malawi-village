@@ -1,0 +1,36 @@
+<section>
+  <h2>Mawali Village</h2>
+  <p>Tastes like a village</p>
+<!-- all various categories -->
+
+  <div class="categories">
+    <div class="list_icon">
+        <span class="material-symbols-outlined">lists</span>
+    </div>
+
+    <!-- <div class="list">
+      <a href="/shop" class="active">All</a>
+      <a href="/juice">Juice</a>
+      <a href="/tea">Tea</a>
+    </div> -->
+  </div>
+
+  <div class="shop_contianer">
+    <div class="products_details">
+      <%= products.forEach(product => {%>
+        <img src="<%= product.image %>" alt="" width="300px" height="370px">
+        <div class="product_name">
+          <%= product.name %>
+        </div>
+        <div class="price">
+          $<%= product.price %>
+        </div>
+      }) %>
+    </div>
+
+  </div>
+
+ 
+
+
+</section>
