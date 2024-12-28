@@ -1,36 +1,31 @@
 <section>
-  <h2>Mawali Village</h2>
+  <h2>Malawi Village</h2>
   <p>Tastes like a village</p>
-<!-- all various categories -->
 
+  <!-- Category Buttons -->
   <div class="categories">
-    <div class="list_icon">
-        <span class="material-symbols-outlined">lists</span>
+    <h2>Product Categories</h2>
+    <div class="category-buttons">
+      <a href="/shop?category=All"><button class="category-button">All</button></a>
+      <a href="/shop?category=Refreshment"><button class="category-button">Refreshments</button></a>
+      <a href="/shop?category=Detox and Immune booster"><button class="category-button">Detox & Immune Boosters</button></a>
+      <a href="/shop?category=Sweet and unsweet tea"><button class="category-button">Sweet & Unsweet Tea</button></a>
     </div>
-
-    <!-- <div class="list">
-      <a href="/shop" class="active">All</a>
-      <a href="/juice">Juice</a>
-      <a href="/tea">Tea</a>
-    </div> -->
   </div>
 
-  <div class="shop_contianer">
-    <div class="products_details">
-      <%= products.forEach(product => {%>
-        <img src="<%= product.image %>" alt="" width="300px" height="370px">
-        <div class="product_name">
-          <%= product.name %>
+  <!-- Products Display -->
+  <% if (filteredProducts && filteredProducts.length > 0) { %>
+    <div id="product-list">
+      <% filteredProducts.forEach(product => { %>
+        <div class="product-item">
+          <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+          <h3><%= product.name %></h3>
+          <p><%= product.description %></p>
+          <p>Price (L): $<%= product.price.big %>, Price (S): $<%= product.price.small %></p>
         </div>
-        <div class="price">
-          $<%= product.price %>
-        </div>
-      }) %>
+      <% }) %>
     </div>
-
-  </div>
-
- 
-
-
+  <% } else { %>
+    <p>No products to display. Please select a category above.</p>
+  <% } %>
 </section>
