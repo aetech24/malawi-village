@@ -5,6 +5,9 @@ export const products = [
     price: { big: 16, small: 10 },
     size: ["L", "S"],
     image: "../public/assets/image-2.jpg",
+    sub_image: [
+      ''
+    ],
     description:
       "Watermelon is one of the most alkaline forming fruits on planet earth. powerful fruit that is Packs with Potassium and Magnesium. Watermelon has 92% H302 hydrogen bond water inside of them. Watermelon is Known for heling cardiovascular system, keeping the body hydrated and providing Electrolytes and Ascorbic Acid. The best result comes from a daily intake or frequent watermelon fast. This is an all-healing fruit for the body!",
     category: "Refreshment",

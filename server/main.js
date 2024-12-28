@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     title: 'Malawi village',
     description: 'this is malawi village official website'
   }
-  res.render('shop',locals, products);
+  res.render('shop',locals);
   
 })
 
