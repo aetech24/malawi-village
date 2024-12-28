@@ -2,26 +2,11 @@ import express from 'express';
 const router = express.Router();
 import { products } from '../data/products.js';
 
-<<<<<<< HEAD
-router.get('/', (req, res) => {
-  const locals = {
-    title: 'Malawi village',
-    description: 'this is malawi village official website'
-  }
-  res.render('shop',locals);
-  
-})
-=======
-// Set the public directory for static assets
-//app.use(express.static('public'));
->>>>>>> af26acf532c60956a691268d2df2b53b19479fcd
-
 // Shop Route
 router.get('/shop', (req, res) => {
   const locals = {
     title: 'Malawi Village',
     description: 'This is Malawi Village official website',
- 
   };
 
   // Retrieve category from query parameters

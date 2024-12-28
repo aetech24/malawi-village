@@ -13,23 +13,19 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-  <div class="shop_contianer">
-    <div class="products_details">
-      
-=======
   <!-- Products Display -->
   <% if (filteredProducts && filteredProducts.length > 0) { %>
     <div id="product-list">
       <% filteredProducts.forEach(product => { %>
         <div class="product-item">
           <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
-          <h3><%= product.name %></h3>
-          <p><%= product.description %></p>
-          <p>Price (L): $<%= product.price.big %>, Price (S): $<%= product.price.small %></p>
+          <div class="product-details">
+            <h3><%= product.name %></h3>
+            <p><%= product.description %></p>
+            <p>Price (L): $<%= product.price.big %>, Price (S): $<%= product.price.small %></p>
+          </div>
         </div>
       <% }) %>
->>>>>>> af26acf532c60956a691268d2df2b53b19479fcd
     </div>
   <% } else { %>
     <p>No products to display. Please select a category above.</p>
