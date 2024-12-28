@@ -44,8 +44,8 @@ router.get('/contact', (req, res) => {
   res.render('contact');
 });
 
-router.get('/index', (req, res) => {
-  res.render('home');
+router.get('/', (req, res) => {
+  res.render('index');
 });
 
 router.get('/shop/juice', (req, res) => {
