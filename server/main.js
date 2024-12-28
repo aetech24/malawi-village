@@ -1,7 +1,8 @@
 import express from 'express';
-const router = express.Router()
+const router = express.Router();
 import { products } from '../data/products.js';
 
+<<<<<<< HEAD
 router.get('/', (req, res) => {
   const locals = {
     title: 'Malawi village',
@@ -10,29 +11,64 @@ router.get('/', (req, res) => {
   res.render('shop',locals);
   
 })
+=======
+// Set the public directory for static assets
+//app.use(express.static('public'));
+>>>>>>> af26acf532c60956a691268d2df2b53b19479fcd
 
+// Shop Route
+router.get('/shop', (req, res) => {
+  const locals = {
+    title: 'Malawi Village',
+    description: 'This is Malawi Village official website',
+ 
+  };
+
+  // Retrieve category from query parameters
+  const selectedCategory = req.query.category;
+
+  // Filter products based on selected category
+  let filteredProducts = [];
+  if (selectedCategory) {
+    if (selectedCategory === 'All') {
+      filteredProducts = products; // Show all products
+    } else {
+      filteredProducts = products.filter(product => product.category === selectedCategory);
+    }
+  }
+
+  // Pass the filtered products and locals to the EJS template
+  res.render('shop', {
+    locals,
+    products,
+    filteredProducts, // Pass the filtered list to EJS
+    selectedCategory, // Pass selected category to EJS for better conditional rendering
+  });
+});
+
+// Other Routes
 router.get('/about', (req, res) => {
-  res.render('about')
-})
+  res.render('about');
+});
 
 router.get('/testimonial', (req, res) => {
-  res.render('testimonial')
-})
+  res.render('testimonial');
+});
 
 router.get('/contact', (req, res) => {
-  res.render('contact')
-})
+  res.render('contact');
+});
 
 router.get('/index', (req, res) => {
-  res.render('home')
-})
+  res.render('home');
+});
 
 router.get('/shop/juice', (req, res) => {
-  res.render('juice')
-})
+  res.render('juice');
+});
 
 router.get('/tea', (req, res) => {
-  res.render('tea')
-})
+  res.render('tea');
+});
 
-export default router
+export default router;

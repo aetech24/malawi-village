@@ -1,6 +1,7 @@
 import { products } from "../data/products";
 
 
+
  products.map((product) => {
    let productDisplay = `
       <div class="products_details">
