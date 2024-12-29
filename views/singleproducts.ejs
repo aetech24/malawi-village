@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= product.name %> - Product Page</title>
+  <link rel="stylesheet" href="/css/singleproducts.css">
+</head>
+<body>
+  <!-- Single Product Section -->
+  <main>
+    <section class="product-display">
+      <div class="product-images">
+        <!-- Main Product Image -->
+        <img src="<%= product.image %>" alt="<%= product.name %>" class="main-image">
+
+        <!-- Additional Images (if available) -->
+        <div class="image-gallery">
+          <% if (product.additionalImages) { %>
+            <% product.additionalImages.forEach(image => { %>
+              <img src="<%= image %>" alt="<%= product.name %>" class="gallery-image">
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <h1>Product Name: <%= product.name %></h1>
+        <p><%= product.description %></p>
+
+        <!-- Pricing -->
+        <div class="product-price">
+          <p>$<%= product.price.big %></p>
+        </div>
+
+        <!-- Size Selector -->
+        <div class="size-selector">
+          <label for="size">Size:</label>
+          <select id="size" name="size">
+            <% product.size.forEach(size => { %>
+              <option value="<%= size %>"><%= size %></option>
+            <% }) %>
+          </select>
+          <a href="#">Size Guide</a>
+        </div>
+
+        <!-- Buttons -->
+        <div class="product-buttons">
+          <button class="add-to-cart">Add to Cart</button>
+          <button class="add-to-wishlist">Add to Wishlist</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Details -->
+    <section class="product-details">
+      <h2>Product Details</h2>
+      <p><%= product.description %></p>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products">
+      <h2>Related Products</h2>
+      <div class="related-list">
+        <% relatedProducts.forEach(related => { %>
+          <a href="/product/<%= related.id %>" class="related-item">
+            <img src="<%= related.image %>" alt="<%= related.name %>">
+            <p><%= related.name %></p>
+          </a>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
