@@ -8,12 +8,16 @@ const cartItems = [
     name: "Product 1",
     price: 10,
     quantity: 2,
+    image: "/assets/image-3.jpg",
+    weight: 20
   },
   {
     id: 2,
     name: "Product 2",
     price: 15,
     quantity: 3,
+    image: "/assets/image-4.jpg",
+    weight: 20
   },
 ];
 // Shop Route
