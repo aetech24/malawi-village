@@ -203,3 +203,11 @@ const Tea_ingredient = [
     },
   },
 ];
+const cartItems=[
+  {
+    id: 1, name:"Product 1", price: 10, quantity: 2 
+  },
+  {
+    id: 2, name:"Product 2", price: 15, quantity: 3 
+  }
+]

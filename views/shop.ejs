@@ -1,3 +1,4 @@
+
 <section>
   <h2>Malawi Village</h2>
   <p>Tastes like a village</p>
@@ -18,7 +19,10 @@
     <div id="product-list">
       <% filteredProducts.forEach(product => { %>
         <div class="product-item">
-          <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+          <!-- Link to Single Product Page -->
+          <a href="/singleproducts/<%= product.id %>">
+            <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+          </a>
           <div class="product-details">
             <h3><%= product.name %></h3>
             <p><%= product.description %></p>
