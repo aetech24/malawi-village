@@ -1,4 +1,4 @@
-<section>
+<main>
   <h2>Malawi Village</h2>
   <p>Tastes like a village</p>
 
@@ -13,25 +13,28 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-  <div class="shop_contianer">
-    <div class="products_details">
-      
-=======
+
   <!-- Products Display -->
   <% if (filteredProducts && filteredProducts.length > 0) { %>
     <div id="product-list">
       <% filteredProducts.forEach(product => { %>
         <div class="product-item">
-          <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
-          <h3><%= product.name %></h3>
-          <p><%= product.description %></p>
-          <p>Price (L): $<%= product.price.big %>, Price (S): $<%= product.price.small %></p>
+          <div class="product_image">
+            <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+          </div>
+          <div class="product_name">
+            <h3><%= product.name %></h3>
+          </div>
+          <!-- <div class="product_desc">
+            <p><%= product.description %></p>
+          </div> -->
+          <div class="product_price">
+            <p><span>Price (L): $<%= product.price.big %></span> <span>Price (S): $<%= product.price.small %></span></p>
+          </div>
         </div>
       <% }) %>
->>>>>>> af26acf532c60956a691268d2df2b53b19479fcd
     </div>
   <% } else { %>
     <p>No products to display. Please select a category above.</p>
   <% } %>
-</section>
+  </main>

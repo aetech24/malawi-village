@@ -2,19 +2,18 @@ import express from 'express';
 const router = express.Router();
 import { products } from '../data/products.js';
 
-<<<<<<< HEAD
-router.get('/', (req, res) => {
-  const locals = {
-    title: 'Malawi village',
-    description: 'this is malawi village official website'
-  }
-  res.render('shop',locals);
+
+// router.get('/', (req, res) => {
+//   const locals = {
+//     title: 'Malawi village',
+//     description: 'this is malawi village official website'
+//   }
+//   res.render('shop',locals);
   
-})
-=======
+// })
+
 // Set the public directory for static assets
 //app.use(express.static('public'));
->>>>>>> af26acf532c60956a691268d2df2b53b19479fcd
 
 // Shop Route
 router.get('/shop', (req, res) => {
@@ -41,13 +40,13 @@ router.get('/shop', (req, res) => {
   res.render('shop', {
     locals,
     products,
-    filteredProducts, // Pass the filtered list to EJS
+    filteredProducts: products, // Pass the filtered list to EJS
     selectedCategory, // Pass selected category to EJS for better conditional rendering
   });
 });
 
 // Other Routes
-router.get('/about', (req, res) => {
+router.get('/', (req, res) => {
   res.render('about');
 });
 

@@ -45,6 +45,10 @@ section {
   padding: 8px;
 }
 
+main {
+  padding: 8px;
+}
+
 .btn {
   background-color: var(--primary-color);
   color: var(--text-color);
