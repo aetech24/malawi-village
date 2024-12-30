@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +8,20 @@
   <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body>
+
+
+ 
   <main class="cart-page">
     <h1>Your Cart</h1>
 
     <% if (cartItems.length > 0) { %>
     <div class="cart-container">
+
       <!-- Left: Product List -->
       <div class="cart-items">
         <% cartItems.forEach(item => { %>
           <div class="cart-item">
+
             <!-- Product Image -->
             <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
 
@@ -33,6 +39,27 @@
                 <input type="hidden" name="size" value="<%= item.size %>">
                 <button type="submit" class="remove-item-button">Remove</button>
               </form>
+
+            <div class="cart_item_image_container">
+              <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart_item_name">
+                <h3>Product Name</h3>
+                <p><%= item.name %></p>
+              </div>
+              <div class="cart_item_quantity">
+                <h3>Product count</h3>
+                <p><%= item.quantity %></p>
+              </div>
+              <div class="cart_item_weight">
+                <h3>Weight lbs</h3>
+                <p><%= item.weight %></p>
+              </div>
+              <div class="cart_item_price">
+                <h3>Price</h3>
+                <p>$<%= item.price %></p>
+              </div>
             </div>
           </div>
         <% }) %>
@@ -41,11 +68,23 @@
       <!-- Right: Order Summary -->
       <div class="order-summary">
         <h2>Order Summary</h2>
-        <p>Subtotal: $<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></p>
-        <p>Shipping: $0.00</p>
-        <p>Tax: $0.00</p>
+        <div class="order_summary_subtotal">
+          <p>Subtotal</p>
+          <span>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></span>
+        </div>
+        <div class="order_summary_price">
+          <p>Shipping</p>
+          <span>$0.00</span>
+        </div>
+        <div class="order_summary_tax">
+          <p>Tax</p>
+          <span>$0.00</span>
+        </div>
         <hr>
-        <p><strong>Total: $<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></strong></p>
+        <div class="order_summary_total">
+          <p><strong>Total</strong></p>
+          <b>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></b>
+        </div>
         <button class="payment-button">Proceed to Payment</button>
       </div>
     </div>

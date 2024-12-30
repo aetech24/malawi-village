@@ -1,5 +1,4 @@
-
-<section>
+<main>
   <h2>Malawi Village</h2>
   <p>Tastes like a village</p>
 
@@ -19,14 +18,17 @@
     <div id="product-list">
       <% filteredProducts.forEach(product => { %>
         <div class="product-item">
-          <!-- Link to Single Product Page -->
-          <a href="/singleproducts/<%= product.id %>">
+          <div class="product_image">
             <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
-          </a>
-          <div class="product-details">
+          </div>
+          <div class="product_name">
             <h3><%= product.name %></h3>
+          </div>
+          <!-- <div class="product_desc">
             <p><%= product.description %></p>
-            <p>Price (L): $<%= product.price.big %>, Price (S): $<%= product.price.small %></p>
+          </div> -->
+          <div class="product_price">
+            <p><span>Price (L): $<%= product.price.big %></span> <span>Price (S): $<%= product.price.small %></span></p>
           </div>
         </div>
       <% }) %>
@@ -34,4 +36,4 @@
   <% } else { %>
     <p>No products to display. Please select a category above.</p>
   <% } %>
-</section>
+  </main>

@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { products } from '../data/products.js';
 
+<<<<<<< HEAD
 
 const cartItems = []; // Simulated cart storage (replace with session or database in production)
 
@@ -35,6 +36,26 @@ router.post('/add-to-cart', (req, res) => {
 
   res.json({ message: 'Product added to cart', cart: cartItems });
 });
+=======
+const cartItems = [
+  {
+    id: 1,
+    name: "Product 1",
+    price: 10,
+    quantity: 2,
+    image: "/assets/image-3.jpg",
+    weight: 20
+  },
+  {
+    id: 2,
+    name: "Product 2",
+    price: 15,
+    quantity: 3,
+    image: "/assets/image-4.jpg",
+    weight: 20
+  },
+];
+>>>>>>> 1c223070eaa020c52729680df2e12ef171a4633d
 // Shop Route
 router.get('/shop', (req, res) => {
   const locals = {
@@ -59,7 +80,7 @@ router.get('/shop', (req, res) => {
   res.render('shop', {
     locals,
     products,
-    filteredProducts, // Pass the filtered list to EJS
+    filteredProducts: products, // Pass the filtered list to EJS
     selectedCategory, // Pass selected category to EJS for better conditional rendering
   });
 });
@@ -88,7 +109,7 @@ router.get('/singleproducts/:id', (req, res) => {
 });
 
 // Other Routes
-router.get('/about', (req, res) => {
+router.get('/', (req, res) => {
   res.render('about');
 });
 
