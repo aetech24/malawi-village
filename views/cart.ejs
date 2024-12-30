@@ -1,72 +1,38 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart</title>
-  <link rel="stylesheet" href="/css/cart.css">
-</head>
-<body>
-
-
- 
-  <main class="cart-page">
-    <h1>Your Cart</h1>
-
-    <% if (cartItems.length > 0) { %>
-    <div class="cart-container">
-
-      <!-- Left: Product List -->
-      <div class="cart-items">
-        <% cartItems.forEach(item => { %>
-          <div class="cart-item">
-
-            <!-- Product Image -->
+<main class="cart-page">
+  <h1>Cart</h1>
+  <div class="cart-container">
+    <!-- Left: Product List -->
+    <div class="cart-items">
+      <% cartItems.forEach(item => { %>
+        <div class="cart-item">
+          <div class="cart_item_image_container">
             <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+          </div>
+          <div class="cart-item-details">
 
-            <!-- Product Details -->
-            <div class="cart-item-details">
-              <h2><%= item.name %></h2>
-              <p>Size: <%= item.size %></p>
-              <p>Quantity: <%= item.quantity %></p>
-              <p>Price: $<%= item.price %> each</p>
-              <p><strong>Total: $<%= (item.price * item.quantity).toFixed(2) %></strong></p>
-              
-              <!-- Remove Item Button -->
-              <form action="/remove-from-cart" method="POST" class="remove-item-form">
-                <input type="hidden" name="id" value="<%= item.id %>">
-                <input type="hidden" name="size" value="<%= item.size %>">
-                <button type="submit" class="remove-item-button">Remove</button>
-              </form>
-
-            <div class="cart_item_image_container">
-              <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+            <div class="cart_item_name">
+              <h3>Product Name</h3>
+              <p><%= item.name %></p>
             </div>
-            <div class="cart-item-details">
-              <div class="cart_item_name">
-                <h3>Product Name</h3>
-                <p><%= item.name %></p>
-              </div>
-              <div class="cart_item_quantity">
-                <h3>Product count</h3>
-                <p><%= item.quantity %></p>
-              </div>
-              <div class="cart_item_weight">
-                <h3>Weight lbs</h3>
-                <p><%= item.weight %></p>
-              </div>
-              <div class="cart_item_price">
-                <h3>Price</h3>
-                <p>$<%= item.price %></p>
-              </div>
+            <div class="cart_item_quantity">
+              <h3>Product count</h3>
+              <p><%= item.quantity %></p>
+            </div>
+            <div class="cart_item_weight">
+              <h3>Weight lbs</h3>
+              <p><%= item.weight %></p>
+            </div>
+            <div class="cart_item_price">
+              <h3>Price</h3>
+              <p>$<%= item.price %></p>
             </div>
           </div>
-        <% }) %>
-      </div>
+        </div>
+      <% }) %>
 
-      <!-- Right: Order Summary -->
-      <div class="order-summary">
+       <!-- Right: Order Summary -->
+       <div class="order-summary">
         <h2>Order Summary</h2>
         <div class="order_summary_subtotal">
           <p>Subtotal</p>
@@ -88,11 +54,4 @@
         <button class="payment-button">Proceed to Payment</button>
       </div>
     </div>
-    <% } else { %>
-    <p>Your cart is empty. <a href="/shop">Continue shopping</a>.</p>
-    <% } %>
-  </main>
-</body>
-</html>
-
   
