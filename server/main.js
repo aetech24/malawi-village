@@ -2,20 +2,39 @@ import express from 'express';
 const router = express.Router();
 import { products } from '../data/products.js';
 
-const cartItems = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 10,
-    quantity: 2,
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 15,
-    quantity: 3,
-  },
-];
+
+const cartItems = []; // Simulated cart storage (replace with session or database in production)
+
+router.post('/add-to-cart', (req, res) => {
+  const { id, size } = req.body;
+
+  // Find the product in the catalog
+  const product = products.find(p => p.id === parseInt(id));
+  if (!product) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+
+  // Check if the product (with the selected size) already exists in the cart
+  const existingCartItem = cartItems.find(item => item.id === product.id && item.size === size);
+
+  if (existingCartItem) {
+    // Increase quantity and update price
+    existingCartItem.quantity += 1;
+    existingCartItem.totalPrice = existingCartItem.quantity * product.price.big;
+  } else {
+    // Add new item to cart
+    cartItems.push({
+      id: product.id,
+      name: product.name,
+      size,
+      price: product.price.big,
+      quantity: 1,
+      totalPrice: product.price.big,
+    });
+  }
+
+  res.json({ message: 'Product added to cart', cart: cartItems });
+});
 // Shop Route
 router.get('/shop', (req, res) => {
   const locals = {
