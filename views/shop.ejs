@@ -6,34 +6,45 @@
   <div class="categories">
     <h2>Product Categories</h2>
     <div class="category-buttons">
-      <a href="/shop?category=All"><button class="category-button">All</button></a>
-      <a href="/shop?category=Refreshment"><button class="category-button">Refreshments</button></a>
-      <a href="/shop?category=Detox and Immune booster"><button class="category-button">Detox & Immune Boosters</button></a>
-      <a href="/shop?category=Sweet and unsweet tea"><button class="category-button">Sweet & Unsweet Tea</button></a>
+      <a href="/shop?category=All">
+        <button class="category-button <%= selectedCategory === 'All' ? 'active' : '' %>">All</button>
+      </a>
+      <a href="/shop?category=Refreshment">
+        <button class="category-button <%= selectedCategory === 'Refreshment' ? 'active' : '' %>">Refreshments</button>
+      </a>
+      <a href="/shop?category=Detox and Immune booster">
+        <button class="category-button <%= selectedCategory === 'Detox and Immune booster' ? 'active' : '' %>">Detox & Immune Boosters</button>
+      </a>
+      <a href="/shop?category=Sweet and unsweet tea">
+        <button class="category-button <%= selectedCategory === 'Sweet and unsweet tea' ? 'active' : '' %>">Sweet & Unsweet Tea</button>
+      </a>
     </div>
   </div>
 
   <!-- Products Display -->
-  <% if (filteredProducts && filteredProducts.length > 0) { %>
-    <div id="product-list">
-      <% filteredProducts.forEach(product => { %>
+  <% if (products && products.length > 0) { %>
+    <div id="product-list" class="product-grid">
+      <% products.forEach(product => { %>
         <div class="product-item">
           <div class="product_image">
-            <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+            <!-- Make the product image clickable -->
+            <a href="/singleproducts/<%= product.id %>">
+              <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+            </a>
           </div>
-          <div class="product_name">
+          <div class="product_details">
             <h3><%= product.name %></h3>
-          </div>
-          <!-- <div class="product_desc">
-            <p><%= product.description %></p>
-          </div> -->
-          <div class="product_price">
-            <p><span>Price (L): $<%= product.price.big %></span> <span>Price (S): $<%= product.price.small %></span></p>
+            <div class="product_price">
+            <p>
+              <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
+              <span>Price (S): $<%= product.price.small || 'N/A' %></span>
+            </p>
+            </div>
           </div>
         </div>
       <% }) %>
     </div>
   <% } else { %>
-    <p>No products to display. Please select a category above.</p>
+    <p class="no-products">No products to display in the "<%= selectedCategory %>" category. Please select another category above.</p>
   <% } %>
-  </main>
+</main>

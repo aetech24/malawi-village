@@ -1,8 +1,7 @@
 import express from 'express';
 const router = express.Router();
+
 import { products } from '../data/products.js';
-
-
 
 const cartItems = [
   {
@@ -11,7 +10,7 @@ const cartItems = [
     price: 10,
     quantity: 2,
     image: "/assets/image-3.jpg",
-    weight: 20
+    weight: 20,
   },
   {
     id: 2,
@@ -19,7 +18,7 @@ const cartItems = [
     price: 15,
     quantity: 3,
     image: "/assets/image-4.jpg",
-    weight: 20
+    weight: 20,
   },
 ];
 
@@ -30,53 +29,38 @@ router.get('/shop', (req, res) => {
     description: 'This is Malawi Village official website',
   };
 
-  // Retrieve category from query parameters
-  const selectedCategory = req.query.category;
+  const selectedCategory = req.query.category || null; // Default to null if no category is selected
+  const filteredProducts = selectedCategory
+    ? selectedCategory === 'All'
+      ? products
+      : products.filter(product => product.category === selectedCategory)
+    : []; // No products displayed if no category is selected
 
-  // Filter products based on selected category
-  let filteredProducts = [];
-  if (selectedCategory) {
-    if (selectedCategory === 'All') {
-      filteredProducts = products; // Show all products
-    } else {
-      filteredProducts = products.filter(product => product.category === selectedCategory);
-    }
-  }
-
-  // Pass the filtered products and locals to the EJS template
   res.render('shop', {
     locals,
-    products,
-    filteredProducts: products, // Pass the filtered list to EJS
-    selectedCategory, // Pass selected category to EJS for better conditional rendering
+    products: filteredProducts, // Pass the filtered list
+    selectedCategory, // Pass selected category for UI updates
   });
 });
 
 // Single Product Route
 router.get('/singleproducts/:id', (req, res) => {
-  const productId = parseInt(req.params.id); // Get the product ID from query parameters
-  const product = products.find(p => p.id === productId); // Find the product by ID
-  if (product)
-  {
-    res.render('singleproducts',{product});
-  }else{
-    res.status(404).send('Product not found')
-  }
-  if (product) {
-     //Find related products (same category, excluding the current product)
-    const relatedProducts = products.filter(
-           p => p.category === product.category && p.id !== product.id
-    );
+  const productId = parseInt(req.params.id, 10); // Ensure the ID is a number
+  const product = products.find(p => p.id === productId);
 
-    //Render the single product page
-    res.render('singleproducts', { product, relatedProducts });
-  } else {
-    res.status(404).send('Product not found');
+  if (!product) {
+    return res.status(404).send('Product not found');
   }
+
+  const relatedProducts = products.filter(
+    p => p.category === product.category && p.id !== product.id
+  );
+
+  res.render('singleproducts', { product, relatedProducts });
 });
 
 // Other Routes
-router.get('/', (req, res) => {
+router.get('/about', (req, res) => {
   res.render('about');
 });
 
