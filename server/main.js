@@ -22,6 +22,22 @@ const cartItems = [
   },
 ];
 
+// ingredients
+const express = require('express');
+const ingredients = require('./data/ingredients');
+
+const app = express();
+
+app.set('view engine', 'ejs');
+
+app.get('/ingredients', (req, res) => {
+    res.render('ingredients', { 
+        title: 'Ingredients',
+        description: 'Explore the essential ingredients we use in our recipes.',
+        ingredients
+    });
+});
+
 // Shop Route
 router.get('/shop', (req, res) => {
   const locals = {

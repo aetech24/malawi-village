@@ -1,0 +1,13 @@
+<% layout('layouts/main') %>
+
+<h4>Ingredients</h4> <!-- Section title -->
+<div class="ingredients">
+    <% ingredients.forEach(ingredient => { %>
+        <div class="ingredient-card">
+            <img src="<%= ingredient.image %>" alt="<%= ingredient.name %>">
+            <p><strong>Name:</strong> <%= ingredient.name %></p>
+            <p><strong>Actual Name:</strong> <%= ingredient.actualName %></p>
+            <p><strong>Info:</strong> <%= ingredient.info %></p>
+        </div>
+    <% }) %>
+</div>

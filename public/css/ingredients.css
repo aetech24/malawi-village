@@ -1,0 +1,23 @@
+.ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.ingredient-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 200px;
+    text-align: center;
+}
+
+.ingredient-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.ingredient-card p {
+    margin: 8px 0;
+}
