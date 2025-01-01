@@ -2,40 +2,24 @@ import express from 'express';
 const router = express.Router();
 
 import { products } from '../data/products.js';
+import { ingredients} from '../data/ingredients.js'
 
-const cartItems = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 10,
-    quantity: 2,
-    image: "/assets/image-3.jpg",
-    weight: 20,
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 15,
-    quantity: 3,
-    image: "/assets/image-4.jpg",
-    weight: 20,
-  },
-];
+const cartItems = [];
 
-// ingredients
-const express = require('express');
-const ingredients = require('./data/ingredients');
+// Ingredients
+
 
 const app = express();
 
 app.set('view engine', 'ejs');
 
+// Ingredients Route
 app.get('/ingredients', (req, res) => {
-    res.render('ingredients', { 
-        title: 'Ingredients',
-        description: 'Explore the essential ingredients we use in our recipes.',
-        ingredients
-    });
+  res.render('ingredients', { 
+    title: 'Ingredients',
+    description: 'Explore the essential ingredients we use in our recipes.',
+    ingredients
+  });
 });
 
 // Shop Route
@@ -65,14 +49,19 @@ router.get('/singleproducts/:id', (req, res) => {
   const product = products.find(p => p.id === productId);
 
   if (!product) {
-    return res.status(404).send('Product not found');
+    // Render a 404 page if the product is not found
+    return res.status(404).send('No product found');
   }
 
   const relatedProducts = products.filter(
     p => p.category === product.category && p.id !== product.id
   );
 
-  res.render('singleproducts', { product, relatedProducts });
+  res.render('singleproducts', { 
+    product, 
+    relatedProducts,
+    ingredients
+  });
 });
 
 // Other Routes

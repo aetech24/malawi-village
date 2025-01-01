@@ -1,23 +1,82 @@
-.ingredients {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-}
 
-.ingredient-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    max-width: 200px;
+.product-ingredients {
+    padding: 20px;
+    
+  }
+  
+  .section-title {
+    font-size: 24px;
     text-align: center;
-}
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  
+  .ingredients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
 
-.ingredient-card img {
-    max-width: 100%;
-    height: auto;
+  .ingredient-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 50%;
+    max-width: 800px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .ingredient-image {
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+  
+  .ingredient-info {
+    padding: 20px;
+    flex: 1;
+  }
+  
+  .ingredient-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #222;
+  }
+  
+  .scientific-name {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  
+  .ingredient-description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .read-more-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
     border-radius: 4px;
-}
-
-.ingredient-card p {
-    margin: 8px 0;
-}
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .read-more-btn:hover {
+    background-color: #333;
+  }

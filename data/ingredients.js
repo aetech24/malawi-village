@@ -1,4 +1,4 @@
-const ingredients = [
+export const ingredients = [
     {
         image: '/assets/watermelon.jpg',
         name: 'Watermelon',
@@ -25,4 +25,4 @@ const ingredients = [
     },
 ];
 
-module.exports = ingredients;
+
