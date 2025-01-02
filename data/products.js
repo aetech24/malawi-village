@@ -9,6 +9,7 @@ export const products = [
       "Watermelon is one of the most alkaline forming fruits on planet earth. powerful fruit that is Packs with Potassium and Magnesium. Watermelon has 92% H302 hydrogen bond water inside of them. Watermelon is Known for heling cardiovascular system, keeping the body hydrated and providing Electrolytes and Ascorbic Acid. The best result comes from a daily intake or frequent watermelon fast. This is an all-healing fruit for the body!",
     category: "Refreshment",
     ingredient: ["watermelon", "lime", "lemon", "ginger", "agave"],
+    
   },
   {
     id: 2,
@@ -203,11 +204,3 @@ const Tea_ingredient = [
     },
   },
 ];
-const cartItems=[
-  {
-    id: 1, name:"Product 1", price: 10, quantity: 2 
-  },
-  {
-    id: 2, name:"Product 2", price: 15, quantity: 3 
-  }
-]

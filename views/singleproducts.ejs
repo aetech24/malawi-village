@@ -12,7 +12,7 @@
       <div class="image-gallery">
         <% if (product.additionalImages) { %>
           <% product.additionalImages.forEach(image => { %>
-            <img src="<%= image %>" alt="<%= product.name %>" class="gallery-image">
+            <img src="<%= i %>" alt="<%= product.name %>" class="gallery-image">
           <% }) %>
         <% } %>
       </div>
@@ -25,13 +25,13 @@
 
       <!-- Pricing -->
       <div class="product-price">
-        <p>$<%= product.price.big %></p>
+        <p id="price-<%= product.id %>">$<%= product.price.big %></p>
       </div>
 
       <!-- Size Selector -->
       <div class="size-selector">
-        <label for="size">Size:</label>
-        <select id="size" name="size">
+        <label for="size-<%= product.id %>">Size:</label>
+        <select id="size-<%=product.id %>" name="size" data-product-id="<%= product.id %>">
           <% product.size.forEach(size => { %>
             <option value="<%= size %>"><%= size %></option>
           <% }) %>
@@ -47,31 +47,42 @@
     </div>
   </section>
 
-  <!-- Product Details -->
-  <section class="product-details">
-    <h2>Product Details</h2>
-    <p><%= product.description %></p>
-  </section>
+<!-- Toggleable Container -->
+<div class="toggle-container">
+  <div class="toggle-item" data-target="product-details">Product Details</div>
+  <div class="toggle-item" data-target="ingredients">Ingredients</div>
+</div>
 
-  <!-- Ingredients Section -->
-  <section class="product-ingredients">
-    <h2 class="section-title">Did you know ?</h2>
-    <div class="ingredients-list">
-      <% ingredients.forEach(ingredient => { %>
-        <div class="ingredient-card">
-          <img src="<%= ingredient.image %>" alt="<%= ingredient.name %>" class="ingredient-image">
-          <div class="ingredient-info">
-            <h3 class="ingredient-name">Ingredient Name</h3>
-            <p class="scientific-name"><em><%= ingredient.actualName %></em></p>
-            <p class="ingredient-description">
-              <%= ingredient.info %>
-            </p>
-            <button class="read-more-btn">Read More</button>
-          </div>
+<div id="product-details" class="toggle-content active">
+  <h2>Product Details</h2>
+  <p><%= product.description %></p>
+</div>
+
+<div id="ingredients" class="toggle-content">
+  <h2>Ingredients</h2>
+  <div class="ingredients-list">
+    <% ingredients.forEach(ingredient => { %>
+      <div class="ingredient-card">
+        <img 
+          src="<%= ingredient.image %>" 
+          alt="<%= ingredient.name %>" 
+          class="ingredient-image"
+        >
+        <div class="ingredient-info">
+          <h3 class="ingredient-name"><%= ingredient.name %></h3>
+          <p class="scientific-name">
+            <em><%= ingredient.actualName %></em>
+          </p>
+          <p class="ingredient-description">
+            <%= ingredient.info %>
+          </p>
+          <button class="read-more-btn">Read More</button>
         </div>
-      <% }) %>
-    </div>
-  </section>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
   <!-- Related Products -->
   <section class="related-products">
     <h2>Related Products</h2>
@@ -85,4 +96,38 @@
     </div>
   </section>
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleItems = document.querySelectorAll('.toggle-item');
+    const toggleContents = document.querySelectorAll('.toggle-content');
+
+    // Initially hide all toggle-content
+    toggleContents.forEach(content => {
+      content.style.display = 'none';
+    });
+
+    toggleItems.forEach(item => {
+      item.addEventListener('click', () => {
+        toggleItems.forEach(i => i.classList.remove('active'));
+        toggleContents.forEach(content => content.classList.remove('active'));
+
+        item.classList.add('active');
+        document.getElementById(item.dataset.target).classList.add('active');
+        // Hide all contents
+        toggleContents.forEach(content => {
+          content.style.display = 'none';
+        });
+
+        // Show the targeted content
+        const targetContent = document.getElementById(item.dataset.target);
+        if (targetContent) {
+          targetContent.style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
+
+
 

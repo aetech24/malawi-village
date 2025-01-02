@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+  <div class="signup-container">
+    <!-- Left Section (Image) -->
+    <div class="image-section">
+      <img src="/assets/image-3.jpg" alt="Signup" class="background-image">
+    </div>
+
+    <!-- Right Section (Form) -->
+    <div class="form-section">
+      <h1 class="logo">Malawi</h1>
+      <form class="signup-form" action="/signup" method="POST">
+        <div class="form-group">
+          <label for="name">Name*</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email*</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number*</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+          <label for="password">Password*</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="submit-btn">Sign Up</button>
+        <div class="form-footer">
+          <a href="/login">Already have an account? Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
