@@ -23,8 +23,8 @@ const cartItems = [
 ];
 
 // ingredients
-const express = require('express');
-const ingredients = require('./data/ingredients');
+// const express = require('express');
+import { ingredients } from '../data/ingredients.js';
 
 const app = express();
 
