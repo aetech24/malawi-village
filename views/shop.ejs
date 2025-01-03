@@ -1,9 +1,9 @@
 <main>
-  <h2>Malawi Village</h2>
-  <p>Tastes like a village</p>
-
+  <!-- <p>Tastes like a village</p>
+ -->
   <!-- Category Buttons -->
   <div class="categories">
+    <h1>Malawi Village Shop</h1>
     <h2>Product Categories</h2>
     <div class="category-buttons">
       <a href="/shop?category=All">
@@ -35,16 +35,34 @@
           <div class="product_details">
             <h3><%= product.name %></h3>
             <div class="product_price">
-            <p>
-              <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
-              <span>Price (S): $<%= product.price.small || 'N/A' %></span>
-            </p>
+              <p>
+                <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
+                <span>Price (S): $<%= product.price.small || 'N/A' %></span>
+              </p>
             </div>
+            <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
           </div>
         </div>
-      <% }) %>
+      <% }); %>
     </div>
   <% } else { %>
     <p class="no-products">No products to display in the "<%= selectedCategory %>" category. Please select another category above.</p>
   <% } %>
 </main>
+
+<script>
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", async () => {
+      const productId = button.getAttribute("data-id");
+
+      const response = await fetch("/add-to-cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: productId })
+      });
+
+      const data = await response.json();
+      document.getElementById("cart-count").textContent = data.cartCount;
+    });
+  });
+</script>

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/singleproducts.css">
+
 <link rel="stylesheet" href="/css/ingredients.css">
 
 <main>
@@ -39,10 +40,11 @@
         <a href="#">Size Guide</a>
       </div>
 
-      <!-- Buttons -->
-      <div class="product-buttons">
-        <button class="add-to-cart">Add to Cart</button>
-        <button class="add-to-wishlist">Add to Wishlist</button>
+        <!-- Buttons -->
+        <div class="product-buttons">
+          <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
+          <button class="add-to-wishlist">Add to Wishlist</button>
+        </div>
       </div>
     </div>
   </section>
@@ -130,4 +132,21 @@
 </script>
 
 
+
+<script>
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+    button.addEventListener("click", async () => {
+      const productId = button.getAttribute("data-id");
+
+      const response = await fetch("/add-to-cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: productId })
+      });
+
+      const data = await response.json();
+      document.getElementById("cart-count").textContent = data.cartCount;
+    });
+  });
+</script>
 

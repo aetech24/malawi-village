@@ -1,7 +1,7 @@
 export const products = [
   {
     id: 1,
-    name: "Intelliget Water",
+    name: "Intelligent Water",
     price: { big: 16, small: 10 },
     size: ["L", "S"],
     image: "/assets/image-2.jpg",
@@ -123,7 +123,7 @@ export const products = [
     category: "Detox and Immune booster",
     ingredient: ["Beet Roots", "Apple", "Orange", "Kale", "Ginger lemon"],
   },
-  // thrid category sweet and unsweet tea
+  // third category sweet and unsweet tea
   {
     id: 10,
     name: "Mango & Coconut tea",
@@ -142,7 +142,7 @@ export const products = [
 
   {
     id: 11,
-    name: "Orange and Rosemery Tea",
+    name: "Orange and Rosemary Tea",
     price: { big: 16, small: 10 },
     size: ["L", "S"],
     image: "/assets/image-3.jpg",
@@ -150,7 +150,7 @@ export const products = [
     category: "Sweet and unsweet tea",
     ingredient: [
       "orange",
-      "Rosemery",
+      "Rosemary",
       "lemon",
       "raspberry leaf",
       "elderberry",
@@ -158,7 +158,7 @@ export const products = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     name: "Raspberry, strawberry &amp; pomegranate tea",
     price: { big: 16, small: 10 },
     size: ["L", "S"],
@@ -169,7 +169,7 @@ export const products = [
       "pomegranate",
       "lemon",
       "raspberry leaf",
-      "strawrberry",
+      "strawberry",
       "nettle",
       "elderberry"
     ],
@@ -196,7 +196,7 @@ const Tea_ingredient = [
 
       eczema: "Nettel helps with eczema, a dry, itchy rash",
 
-      raspiratory_support:
+      respiratory_support:
         "Nettle tincture can help with asthma, mucus conditions of the lungs, chronic coughs, flu, colds, bronchitis, and pneumonia.",
 
       immune_system:
@@ -204,3 +204,15 @@ const Tea_ingredient = [
     },
   },
 ];
+<<<<<<< village
+=======
+const cartItems=[
+  {
+    id: 1, name:"Product 1", price: 10, quantity: 2 
+  },
+  {
+    id: 2, name:"Product 2", price: 15, quantity: 3 
+  }
+]
+
+>>>>>>> main
