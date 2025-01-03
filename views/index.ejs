@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= locals.title%></title>
+  <title><%= locals.title %></title>
 </head>
 <body>
+  <!-- <header>
+     <a href="/cart">Cart (<span id="cart-count"><%= cartCount %></span>)</a>
+  </header>  -->
+
   <!-- hero area bgns here -->
   <div class="hero_banner">
     <img src="/assets/hero-banner.jpg" alt="">
@@ -23,67 +27,104 @@
   <!-- hero area ends here -->
 
   <!-- main body -->
-   
+  <main>
+    <div id="product-list" class="product-grid">
+      <% products.forEach(product => { %>
+        <div class="product-item">
+          <div class="product_image">
+            <!-- Make the product image clickable -->
+            <a href="/singleproducts/<%= product.id %>">
+              <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
+            </a>
+          </div>
+          <div class="product_details">
+            <h3><%= product.name %></h3>
+            <div class="product_price">
+              <p>
+                <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
+                <span>Price (S): $<%= product.price.small || 'N/A' %></span>
+              </p>
+            </div>
+            <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </main>
 
-   <!-- main ends here -->
+  <!-- main ends here -->
 
-   <!-- cta area bns gere-->
-    <div class="cta_info">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consectetur iste ipsum, soluta officia laboriosam,
-        dolorum aspernatur facilis corporis nostrum exercitationem totam eum? Cumque assumenda asperiores commodi illum
-        debitis maiores.</p>
+  <!-- cta area bns gere-->
+  <div class="cta_info">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consectetur iste ipsum, soluta officia laboriosam,
+      dolorum aspernatur facilis corporis nostrum exercitationem totam eum? Cumque assumenda asperiores commodi illum
+      debitis maiores.</p>
+  </div>
+
+  <div class="cta_container">
+    <div class="cta_content">
+      <h2>Want 10% off your first order?</h2>
+      <p>Enter your email below to <span>get 10%</span> <br> off your first order</p>
+      <form action="">
+        <input type="text" placeholder="Email Address">
+        <button class="btn view_btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- advantage  -->
+
+  <div class="gallery_container">
+    <div class="gallery_text">
+      <h2 class="main">Our Gallery</h2>
     </div>
 
-
-    <div class="cta_container">
-      <div class="cta_content">
-        <h2>Want 10% off your first order?</h2>
-        <p>Enter your email below to <span>get 10%</span> <br> off your first order</p>
-        <form action="">
-          <input type="text" placeholder="Email Address">
-          <button class="btn view_btn">Submit</button>
-        </form>
+    <div class="gallery_related_images">
+      <div class="related_images">
+        <img src="/assets/tes-img1.jpg" alt="" width="330px">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img9.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img2.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img3.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img4.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img5.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img6.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img7.jpg" alt="">
+      </div>
+      <div class="related_images">
+        <img src="/assets/tes-img8.jpg" alt="">
       </div>
     </div>
+  </div>
 
-    <!-- advantage  -->
+  <script>
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+      button.addEventListener("click", async () => {
+        const productId = button.getAttribute("data-id");
 
-    <div class="gallery_container">
-      <div class="gallery_text">
-        <h2 class="main">Our Gallery</h2>
-      </div>
-    
-      <div class="gallery_related_images">
-        <div class="related_images">
-          <img src="/assets/tes-img1.jpg" alt="" width="330px">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img9.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img2.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img3.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img4.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img5.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img6.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img7.jpg" alt="">
-        </div>
-        <div class="related_images">
-          <img src="/assets/tes-img8.jpg" alt="">
-        </div>
-      </div>
-    </div>
+        const response = await fetch("/add-to-cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: productId })
+        });
 
-
+        const data = await response.json();
+        document.getElementById("cart-count").textContent = data.cartCount;
+      });
+    });
+  </script>
 </body>
 </html>

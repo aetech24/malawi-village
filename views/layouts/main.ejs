@@ -10,22 +10,70 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
   <!-- css files -->
-   <link rel="stylesheet" href="/css/general.css">
-   <link rel="stylesheet" href="/css/style.css">
-   <link rel="stylesheet" href="/css/shop.css">
-   <link rel="stylesheet" href="/css/about.css">
-   <link rel="stylesheet" href="/css/cart.css">
+  <link rel="stylesheet" href="/css/general.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/shop.css">
+  <link rel="stylesheet" href="/css/about.css">
+  <link rel="stylesheet" href="/css/cart.css">
+  <style>
+    /* Scroll to Top Button */
+    #scrollToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: #ffd600;
+      color: black;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    #scrollToTopBtn:hover {
+      background-color: #ffb800;
+    }
+  </style>
 </head>
 <body>
   <%- include('../partials/header.ejs') %>
   <%- body %>
-  <%- include('../partials/about.ejs') %>
+  <% if (locals.includeAbout) { %>
+    <%- include('../partials/about.ejs') %>
+  <% } %>
   <%- include('../partials/footer.ejs') %>
 
+  <!-- Scroll to Top Button -->
+  <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">&#8679;</button>
+
+  <script>
+    // Scroll to Top Button
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    }
+
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
   <script type="module" src="./main.js"></script>
 </body>
 </html>
