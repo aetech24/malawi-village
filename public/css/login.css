@@ -1,15 +1,4 @@
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-  }
-  
-
-  body {
-    font-family: Arial, sans-serif;
-  }
   
   .main-container {
     display: flex;
@@ -45,6 +34,7 @@
     font-weight: bold;
     margin-bottom: 5px;
     display: block;
+    text-align: left;
   }
   
   .login-form input {

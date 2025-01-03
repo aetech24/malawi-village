@@ -60,7 +60,7 @@ router.get('/singleproducts/:id', (req, res) => {
   res.render('singleproducts', { 
     product, 
     relatedProducts,
-    ingredients
+    ingredients,
   });
 });
 
@@ -85,7 +85,42 @@ router.get('/contact', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.render('index');
+  const items = [
+    { name: 'Malawi Juice', image: '/assets/image-1.jpg' },
+    { name: 'Orange Juice', image: '/assets/image-2.jpg' },
+    { name: 'Watermelon Drink', image: '/assets/image-3.jpg' },
+    { name: 'Coca-Cola', image: '/assets/image-4.jpg' },
+  ];
+  const gridProducts = [
+    {
+      name: "Strawberry Juice",
+      price: 120.0,
+      image: "/assets/image-5.jpg",
+    },
+    {
+      name: "Cocktail Drink",
+      price: 120.0,
+      image: "/assets/image-2.jpg",
+    },
+    {
+      name: "Milkshake",
+      price: 120.0,
+      image: "/assets/image-3.jpg",
+    },
+    {
+      name: "Hot Cocoa",
+      price: 120.0,
+      image: "/assets/image-4.jpg",
+    },
+    
+  ];
+  res.render('index',{items, 
+    backgroundImage: '/assets/image-6.jpg', // Path to your background image
+    productImage: '/assets/image-6.jpg', // Path to the product image
+    buttonLink: '/shop',
+    gridProducts
+
+  });
 });
 
 router.get('/cart', (req, res) => {

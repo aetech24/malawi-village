@@ -46,6 +46,72 @@
       </div>
     </div>
 
+    <div class="flash-sales-container">
+      <h1>Flash Sales</h1>
+      <div class="products-grid">
+        <% items.forEach(item => { %>
+          <div class="product-card">
+            <div class="product-image">
+              <img src="<%= item.image %>" alt="<%= item.name %>">
+              <button class="wishlist-btn">&#x2661;</button>
+            </div>
+            <div class="product-details">
+              <h3><%= item.name %></h3>
+              <a href="/cart">
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </a>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+    <!--View All button -->
+    <div class="view-all-btn-container">
+      <a href="/shop?category=All">
+        <button class="view-all-btn">View All Products</button>
+      </a>
+    </div>
+    <!-- banner -->
+     <section>
+     <div class="banner-container" style="background-image: url('<%= backgroundImage %>');">
+    <div class="overlay"></div>
+    <div class="banner-content">
+      <a href="/shop">
+      <h3 class="category-title">Categories</h3>
+    </a>
+      <h1 class="banner-title">Enjoy Your Favorite Juice<br>at low prices</h1>
+      <a href="<%= buttonLink %>" class="buy-now-btn">Buy Now</a>
+    </div>
+    <div class="product-image-container">
+      <img src="<%= productImage %>" alt="Juice" class="product-image">
+    </div>
+  </div>
+</section>
+
+
+<!--View all products grid-->
+
+<div class="product-grid-container">
+  <h2 class="section-title">Explore Our Products</h2>
+  <div class="product-grid">
+    <% gridProducts.forEach(gridProduct => { %>
+      <div class="products-card">
+        <div class="product-images-container">
+          <img src="<%= gridProduct.image %>" alt="<%= gridProduct.name %>" class="product-images">
+          <button class="wishlist-btns">&#x2661;</button>
+        </div>
+        <div class="products-info">
+          <p class="products-name"><%= gridProduct.name %></p>
+          <p class="products-price">GH₵<%= gridProduct.price.toFixed(2) %></p>
+          <a href="/cart">
+          <button class="add-to-cart-btns">Add to Cart</button>
+          </a>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
     <!-- advantage  -->
 
     <div class="gallery_container">
