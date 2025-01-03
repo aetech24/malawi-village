@@ -116,7 +116,6 @@
     background-color: #333;
   }
   
-  /* Product Details */
   .product-details {
     margin-bottom: 40px;
   }
@@ -130,6 +129,69 @@
     font-size: 16px;
     line-height: 1.6;
     color: #555;
+  }
+  #ingredients {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .ingredients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .ingredient-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ingredient-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  
+  .ingredient-info {
+    flex: 1;
+  }
+  
+  .ingredient-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .scientific-name {
+    font-size: 1.2rem;
+    color: #777;
+    margin: 5px 0;
+  }
+  
+  .ingredient-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+  
+  .read-more-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .read-more-btn:hover {
+    background-color: #555;
   }
   
   .related-products {
@@ -174,6 +236,59 @@
   .related-item p {
     font-size: 14px;
     font-weight: bold;
+  }
+  .container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  .section {
+    display: block;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .section:hover {
+    background-color: #333;
+  }
+  .toggle-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    margin: 20px 0;
+    width: 40%;
+  }
+
+  .toggle-item {
+    padding: 10px;
+    background-color: #d3d3d3;
+    border-bottom: 1px solid #000;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .toggle-item.active {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .toggle-content {
+    display: none;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+
+  .toggle-content.active {
+    display: block;
   }
   
  

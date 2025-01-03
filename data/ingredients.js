@@ -25,4 +25,3 @@ export const ingredients = [
     },
 ];
 
-// export default ingredients;
