@@ -5,17 +5,17 @@ import { products } from '../data/products.js';
 import { ingredients } from '../data/ingredients.js';
 
 let cartItems = [];
-import { ingredients} from '../data/ingredients.js'
 
-const cartItems = [];
-
-// Ingredients
-
-
-
+// Initialize the app
 const app = express();
-
 app.set('view engine', 'ejs');
+
+// Middleware to initialize session cart
+app.use((req, res, next) => {
+  if (!req.session) req.session = {};
+  if (!req.session.cart) req.session.cart = [];
+  next();
+});
 
 // Ingredients Route
 router.get('/ingredients', (req, res) => {
@@ -24,33 +24,28 @@ router.get('/ingredients', (req, res) => {
     description: 'Explore the essential ingredients we use in our recipes.',
     ingredients,
     cartCount: req.session.cart.length,
-    includeAbout: false
+    includeAbout: false,
   });
 });
 
+// Checkout Route
 router.get('/checkout', (req, res) => {
   res.render('checkout', { title: 'Checkout' });
 });
 
 // Shop Route
 router.get('/shop', (req, res) => {
-  const locals = {
-    title: 'Malawi Village',
-    description: 'This is Malawi Village official website',
-  };
-
   const selectedCategory = req.query.category || 'All';
-  const filteredProducts = selectedCategory === 'All' ? products : products.filter(product => product.category === selectedCategory);
-  const selectedCategory = req.query.category || 'All'; // Default to 'All' if no category is selected
   const filteredProducts = selectedCategory === 'All'
     ? products
     : products.filter(product => product.category === selectedCategory);
 
   res.render('shop', {
-    locals,
+    title: 'Malawi Village',
+    description: 'This is Malawi Village official website',
     products: filteredProducts,
     selectedCategory,
-    cartItemCount: cartItems.length
+    cartItemCount: cartItems.length,
   });
 });
 
@@ -69,9 +64,9 @@ router.get('/singleproducts/:id', (req, res) => {
     product, 
     relatedProducts,
     ingredients,
-    cartItemCount: cartItems.length
-    cartCount: req.session.cart.length, 
-    includeAbout: false
+    cartItemCount: cartItems.length,
+    cartCount: req.session.cart.length,
+    includeAbout: false,
   });
 });
 
@@ -112,10 +107,6 @@ router.post('/cart/remove', (req, res) => {
   res.status(200).json({ message: 'Product removed from cart', cartItemCount: cartItems.length });
 });
 
-router.get('/cart', (req, res) => {
-  res.render('cart', { cartItems, cartItemCount: cartItems.length });
-});
-
 // Other Routes
 router.get('/about', (req, res) => {
   res.render('about', { cartItemCount: cartItems.length });
@@ -137,9 +128,8 @@ router.get('/contact', (req, res) => {
   res.render('contact', { cartItemCount: cartItems.length });
 });
 
-// Route to display products
+// Home Route
 router.get('/', (req, res) => {
-
   const items = [
     { name: 'Malawi Juice', image: '/assets/image-1.jpg' },
     { name: 'Orange Juice', image: '/assets/image-2.jpg' },
@@ -153,47 +143,23 @@ router.get('/', (req, res) => {
     { name: "Hot Cocoa", price: 120.0, image: "/assets/image-4.jpg" },
   ];
   res.render('index', {
-    items, 
+    title: 'Malawi Village',
+    description: 'Welcome to Malawi Village',
+    items,
     backgroundImage: '/assets/image-6.jpg',
     productImage: '/assets/image-6.jpg',
     buttonLink: '/shop',
     gridProducts,
-    cartItemCount: cartItems.length
+    cartItemCount: cartItems.length,
   });
 });
 
-  const locals = {
-    title: 'Malawi Village',
-    description: 'Welcome to Malawi Village',
-  };
-  res.render('index', { locals, products, cartCount: req.session.cart.length, includeAbout: true });
-
-});
-
-// Route to add to cart
-router.post('/add-to-cart', (req, res) => {
-  const { id } = req.body;
-  const product = products.find((p) => p.id == id);
-
-  if (product) {
-    const item = req.session.cart.find((p) => p.id == product.id);
-    if (item) {
-      item.quantity += 1;
-    } else {
-      req.session.cart.push({ ...product, quantity: 1 });
-    }
-  }
-
-  res.json({ cartCount: req.session.cart.length });
-});
-
-// Route to display cart
-router.get('/cart', (req, res) => {
-  const locals = {
-    title: 'Your Cart',
-    description: 'Review your cart items',
-  };
-  res.render('cart', { locals, cart: req.session.cart, cartCount: req.session.cart.length, includeAbout: false });
+// Routes to List All Available Routes
+router.get('/routes', (req, res) => {
+  const routes = router.stack
+    .filter(r => r.route)
+    .map(r => r.route.path);
+  res.json({ availableRoutes: routes });
 });
 
 export default router;
