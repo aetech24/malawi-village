@@ -340,6 +340,8 @@ main h2, .main {
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 .overlay {
@@ -370,13 +372,19 @@ main h2, .main {
 }
 
 .buy-now-btn {
-  display: inline-block;
+  display: inline;
+  width: 18%;
+  text-align: center;
+  align-items: center;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 10px 20px;
   background-color: yellow;
   color: black;
   text-decoration: none;
   font-weight: bold;
+  z-index: 10;
 }
 
 .product-image-container {
@@ -474,7 +482,7 @@ main h2, .main {
   width: 60%;
 }
 
-.cta_container {
+/* .cta_container {
   position: relative;
   width: 70%;
   height: 400px;
@@ -490,9 +498,9 @@ main h2, .main {
   border-radius: var(--image-border-radius);
   box-shadow: var(--box-shadow);
   padding: 10px;
-}
+} */
 
-.cta_content {
+/* .cta_content {
   position: absolute;
   text-align: center;
   align-items: center;
@@ -503,9 +511,9 @@ main h2, .main {
   left: 20%;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 5px;
-}
+} */
 
-.cta_content h2 {
+/* .cta_content h2 {
   font-size: var(--header-fonts-2);
   text-transform: uppercase;
   font-weight: 700;
@@ -522,7 +530,7 @@ main h2, .main {
   font-size: 20px;
   font-weight: 600;
   color: black;
-}
+} */
 
 
 /* ========== footer ========= */

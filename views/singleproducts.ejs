@@ -1,6 +1,14 @@
-<link rel="stylesheet" href="/css/singleproducts.css">
-<link rel="stylesheet" href="/css/ingredients.css">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Product</title>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/singleproducts.css">
+  <link rel="stylesheet" href="/css/ingredients.css">
+</head>
+<body>
 <main>
   <!-- Single Product Section -->
   <section class="product-display">
@@ -41,7 +49,7 @@
 
       <!-- Buttons -->
       <div class="product-buttons">
-        <button class="add-to-cart">Add to Cart</button>
+        <button class="add-to-cart" onclick="addToCart('<%= product.id %>')">Add to Cart</button>
         <button class="add-to-wishlist">Add to Wishlist</button>
       </div>
     </div>
@@ -127,7 +135,44 @@
       });
     });
   });
+
+  function addToCart(productId) {
+    fetch('/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productId: productId })
+    }).then(response => response.json())
+      .then(data => {
+        if (data.message === 'Product added to cart') {
+          alert('Product added to cart');
+          document.querySelector('.cart-count').textContent = data.cartItemCount;
+        } else {
+          alert('Failed to add product to cart');
+        }
+      });
+  }
 </script>
+<script src="/js/cart.js"></script>
+
+<style>
+  .add-to-cart, .add-to-wishlist {
+    background-color: #ffd400;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .add-to-cart:hover, .add-to-wishlist:hover {
+    opacity: 0.8;
+  }
+</style>
+</body>
+</html>
 
 
 

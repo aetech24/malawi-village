@@ -4,21 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= locals.title%></title>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- hero area bgns here -->
   <div class="hero_banner">
-    <img src="/assets/hero-banner.jpg" alt="">
-
-    <div class="hero_banner_arrow">
-      <div class="left">
-        <span class="material-symbols-outlined">chevron_left</span>
-      </div>
-      <div class="right">
-        <span class="material-symbols-outlined">chevron_right</span>
-      </div>
-    </div>
+    <img src="/assets/hero-banner.jpg" alt="hero-img" style="opacity: 0.65;">
+    <div class="centered">
+      <h4>Malawi Village</h4>
+      <p style="color: #ffd400; font-style:italic;">Every sip feels like spring</p> 
+    </div> 
   </div>
+      <!-- banner -->
+      <section>
+        <div class="banner-container" style="background-image: url('<%= backgroundImage %>');">
+       <div class="overlay"></div>
+       <div class="banner-content">
+        <a href="/shop">
+         <h3 class="category-title">Categories</h3>
+       </a>
+       <h1 class="banner-title">Enjoy Your Favorite Juice<br>at low prices</h1>
+       <div class="order_btn">
+        <button class="btn order"><a href="<%= buttonLink %>">Shop Now</a></button>
+      </div>
+       </div>
+       <!-- <div class="product-image-container">
+         <img src="<%= productImage %>" alt="Juice" class="product-image">
+       </div> -->
+
+     </div>
+   </section>
+   
 
   <!-- hero area ends here -->
 
@@ -28,23 +44,15 @@
    <!-- main ends here -->
 
    <!-- cta area bns gere-->
-    <div class="cta_info">
+    <!-- <div class="cta_info">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consectetur iste ipsum, soluta officia laboriosam,
         dolorum aspernatur facilis corporis nostrum exercitationem totam eum? Cumque assumenda asperiores commodi illum
         debitis maiores.</p>
-    </div>
+    </div> -->
 
-
-    <div class="cta_container">
-      <div class="cta_content">
-        <h2>Want 10% off your first order?</h2>
-        <p>Enter your email below to <span>get 10%</span> <br> off your first order</p>
-        <form action="">
-          <input type="text" placeholder="Email Address">
-          <button class="btn view_btn">Submit</button>
-        </form>
-      </div>
-    </div>
+    <!-- <div class="cta_container">
+      <div class="centered">Centered</div>
+    </div> -->
 
     <div class="flash-sales-container">
       <h1>Flash Sales</h1>
@@ -53,13 +61,13 @@
           <div class="product-card">
             <div class="product-image">
               <img src="<%= item.image %>" alt="<%= item.name %>">
-              <button class="wishlist-btn">&#x2661;</button>
+              <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
             </div>
             <div class="product-details">
               <h3><%= item.name %></h3>
-              <a href="/cart">
-              <button class="add-to-cart-btn">Add to Cart</button>
-            </a>
+              <a href="/singleproducts/<%= item.id %>">
+                <button class="add-to-cart-btn">View Product</button>
+              </a>
             </div>
           </div>
         <% }); %>
@@ -71,27 +79,11 @@
         <button class="view-all-btn">View All Products</button>
       </a>
     </div>
-    <!-- banner -->
-     <section>
-     <div class="banner-container" style="background-image: url('<%= backgroundImage %>');">
-    <div class="overlay"></div>
-    <div class="banner-content">
-      <a href="/shop">
-      <h3 class="category-title">Categories</h3>
-    </a>
-      <h1 class="banner-title">Enjoy Your Favorite Juice<br>at low prices</h1>
-      <a href="<%= buttonLink %>" class="buy-now-btn">Buy Now</a>
-    </div>
-    <div class="product-image-container">
-      <img src="<%= productImage %>" alt="Juice" class="product-image">
-    </div>
-  </div>
-</section>
 
 
 <!--View all products grid-->
 
-<div class="product-grid-container">
+<!-- <div class="product-grid-container">
   <h2 class="section-title">Explore Our Products</h2>
   <div class="product-grid">
     <% gridProducts.forEach(gridProduct => { %>
@@ -103,23 +95,23 @@
         <div class="products-info">
           <p class="products-name"><%= gridProduct.name %></p>
           <p class="products-price">GH₵<%= gridProduct.price.toFixed(2) %></p>
-          <a href="/cart">
-          <button class="add-to-cart-btns">Add to Cart</button>
+          <a href="javascript:void(0);" onclick="addToCart('<%= gridProduct.id %>')">
+            <button class="add-to-cart-btns">Add to Cart</button>
           </a>
         </div>
       </div>
     <% }); %>
   </div>
-</div>
+</div> -->
 
     <!-- advantage  -->
 
-    <div class="gallery_container">
+    <div class="gallery_container" style="margin-bottom: 25px;">
       <div class="gallery_text">
         <h2 class="main">Our Gallery</h2>
       </div>
     
-      <div class="gallery_related_images">
+      <div class="gallery_related_images" style="overflow: auto;">
         <div class="related_images">
           <img src="/assets/tes-img1.jpg" alt="" width="330px">
         </div>
@@ -148,8 +140,79 @@
           <img src="/assets/tes-img8.jpg" alt="">
         </div>
       </div>
-    </div>
+      <div class="order_btn">
+        <button class="btn order"><a href="views\about.ejs">Learn More</a></button>
+      </div>
 
+    </div>
+<script type="module" src="/server/shop.js"></script>
+<script src="/js/cart.js"></script>
+  <!-- <script>
+    function addToCart(productId) {
+      fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: productId })
+      }).then(response => response.json())
+        .then(data => {
+          if (data.message === 'Product added to cart') {
+            alert('Product added to cart');
+            document.querySelector('.cart-count').textContent = data.cartItemCount;
+          } else {
+            alert('Failed to add product to cart');
+          }
+        });
+    }
+  </script> -->
 
 </body>
 </html>
+
+<style>
+  .add-to-cart-btn, .add-to-cart-btns {
+    background-color: #ffd400;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .add-to-cart-btn:hover, .add-to-cart-btns:hover {
+    opacity: 0.8;
+  }
+  .hero-banner {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  .hero-banner img {
+    opacity: 0.3;
+  }
+
+  /* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+  .centered h4 {
+    font-size: 120px;
+    background: rgba(0, 0, 0, 0.384);
+    color: white;
+  }
+  .centered p {
+    font-size: 30px;
+    text-align: center;
+    font-weight: 300;
+    background: rgba(0, 0, 0, 0.384);
+  }
+
+  /* CTA area */
+</style>
