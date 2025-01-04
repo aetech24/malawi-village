@@ -2,6 +2,17 @@
 
 <link rel="stylesheet" href="/css/ingredients.css">
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Product</title>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/singleproducts.css">
+  <link rel="stylesheet" href="/css/ingredients.css">
+</head>
+<body>
 <main>
   <!-- Single Product Section -->
   <section class="product-display">
@@ -45,6 +56,10 @@
           <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
           <button class="add-to-wishlist">Add to Wishlist</button>
         </div>
+      <!-- Buttons -->
+      <div class="product-buttons">
+        <button class="add-to-cart" onclick="addToCart('<%= product.id %>')">Add to Cart</button>
+        <button class="add-to-wishlist">Add to Wishlist</button>
       </div>
     </div>
   </section>
@@ -130,6 +145,25 @@
     });
   });
 </script>
+<script src="/js/cart.js"></script>
+
+<style>
+  .add-to-cart, .add-to-wishlist {
+    background-color: #ffd400;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .add-to-cart:hover, .add-to-wishlist:hover {
+    opacity: 0.8;
+  }
+</style>
+</body>
+</html>
 
 
 

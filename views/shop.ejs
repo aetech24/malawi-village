@@ -1,6 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+</head>
+<body>
 <main>
-  <!-- <p>Tastes like a village</p>
- -->
+  <h2>Malawi Village</h2>
+  <p style="text-align: center; align-self:center; font-style:italic;">Tastes like a village</p>
+
   <!-- Category Buttons -->
   <div class="categories">
     <h1>Malawi Village Shop</h1>
@@ -40,7 +50,9 @@
                 <span>Price (S): $<%= product.price.small || 'N/A' %></span>
               </p>
             </div>
-            <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
+            <a href="javascript:void(0);" onclick="addToCart('<%= product.id %>')">
+              <button class="add-to-cart">Add to Cart</button>
+            </a>
           </div>
         </div>
       <% }); %>
@@ -50,19 +62,22 @@
   <% } %>
 </main>
 
-<script>
-  document.querySelectorAll(".add-to-cart").forEach(button => {
-    button.addEventListener("click", async () => {
-      const productId = button.getAttribute("data-id");
+<script src="/js/cart.js"></script>
 
-      const response = await fetch("/add-to-cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: productId })
-      });
+<style>
+  .add-to-cart {
+    background-color: #ffd400;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
 
-      const data = await response.json();
-      document.getElementById("cart-count").textContent = data.cartCount;
-    });
-  });
-</script>
+  .add-to-cart:hover {
+    opacity: 0.8;
+  }
+</style>
+</body>
+</html>

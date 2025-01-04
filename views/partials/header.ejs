@@ -2,6 +2,7 @@
   <div class="logo">
     <a href="/"><img src="/assets/logo.png" alt="" width="39"></a>
   </div>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 
   <nav>
     <div class="nav_left">
@@ -10,18 +11,18 @@
         <div><a href="/shop">Shop</a><hr></div>
         <div><a href="/about">About Us</a><hr></div>
         <div><a href="/contact">Contact</a></div>
-        <div><a href="/signup"> Sign Up</a><hr></div>
-        <div><a href="/login">Login</a><hr></div>
+        <!-- <div><a href="/signup"> Sign Up</a><hr></div> -->
+        <!-- <div><a href="/login">Login</a><hr></div> -->
       </ul>
     </div>
   </nav>
 
   <div class="header_right">
-    <span class="material-symbols-outlined">person</span>
-    <a href="/cart">
-      <span class="material-symbols-outlined">shopping_cart</span>
-      (<span id="cart-count"><%= cartCount %></span>)
-    </a>
-    <span class="material-symbols-outlined">favorite</span>
+    <a href="/login"><span class="material-symbols-outlined">Login</span></a>
+      <a href="/cart">
+        <span class="material-icons"><i class="fa-solid fa-cart-shopping" style="font-size: 23px;"></i></span>
+        <span class="cart-count"><%= cartItemCount %></span>
+      </a>
+        <span class="material-symbols-outlined">favorite</span>
   </div>
 </header>

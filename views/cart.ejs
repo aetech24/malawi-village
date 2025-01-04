@@ -1,75 +1,166 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= locals.title %></title>
+  <title>Cart</title>
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body>
-  <header>
-    <a href="/">Back to Products</a>
-  </header>
-
   <main class="cart-page">
-    <h1>Your Cart</h1>
-    <% if (cart.length > 0) { %>
-      <div class="cart-container">
-        <!-- Left: Product List -->
-        <div class="cart-items">
-          <% cart.forEach(item => { %>
-            <div class="cart-item">
-              <div class="cart_item_image_container">
-                <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+    <h1>Cart</h1>
+    <div class="cart-container">
+      <!-- Left: Product List -->
+      <div class="cart-items">
+        <% cartItems.forEach(item => { %>
+          <div class="cart-item">
+            <div class="cart_item_image_container">
+              <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart_item_name">
+                <h3>Product Name</h3>
+                <p><%= item.name %></p>
               </div>
-              <div class="cart-item-details">
-                <div class="cart_item_name">
-                  <h3>Product Name</h3>
-                  <p><%= item.name %></p>
-                </div>
-                <div class="cart_item_quantity">
-                  <h3>Product count</h3>
-                  <p><%= item.quantity %></p>
-                </div>
-                <div class="cart_item_weight">
-                  <h3>Weight lbs</h3>
-                  <p><%= item.weight %></p>
-                </div>
-                <div class="cart_item_price">
-                  <h3>Price</h3>
-                  <p>$<%= item.price %></p>
-                </div>
+              <div class="cart_item_quantity">
+                <h3>Product count</h3>
+                <p><%= item.quantity %></p>
+                <button class="quantity-btn increase" onclick="updateQuantity('<%= item.id %>', 1)">+</button>
+                <button class="quantity-btn decrease" onclick="updateQuantity('<%= item.id %>', -1)">-</button>
+              </div>
+              <div class="cart_item_weight">
+                <h3>Weight lbs</h3>
+                <p><%= item.weight %></p>
+              </div>
+              <div class="cart_item_price">
+                <h3>Price</h3>
+                <p>$<%= item.price %></p>
+              </div>
+              <div class="cart_item_actions">
+                <button class="delete-btn" onclick="removeFromCart('<%= item.id %>')">Remove</button>
               </div>
             </div>
-          <% }) %>
+          </div>
+        <% }) %>
+      </div>
+      <!-- Right: Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="order_summary_subtotal">
+          <p>Subtotal</p>
+          <span>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></span>
         </div>
-
-        <!-- Right: Order Summary -->
-        <div class="order-summary">
-          <h2>Order Summary</h2>
-          <div class="order_summary_subtotal">
-            <p>Subtotal</p>
-            <span>$<%= cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></span>
-          </div>
-          <div class="order_summary_price">
-            <p>Shipping</p>
-            <span>$0.00</span>
-          </div>
-          <div class="order_summary_tax">
-            <p>Tax</p>
-            <span>$0.00</span>
-          </div>
-          <hr>
-          <div class="order_summary_total">
-            <p><strong>Total</strong></p>
-            <b>$<%= cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></b>
-          </div>
-          <button class="payment-button">Proceed to Payment</button>
+        <div class="order_summary_price">
+          <p>Shipping</p>
+          <span>$0.00</span>
+        </div>
+        <div class="order_summary_tax">
+          <p>Tax</p>
+          <span>$0.00</span>
+        </div>
+        <hr>
+        <div class="order_summary_total">
+          <p><strong>Total</strong></p>
+          <b>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></b>
+        </div>
+        <div class="order_btn">
+          <button class="payment-button"><a href="/checkout">Proceed to Payment</a></button>
         </div>
       </div>
-    <% } else { %>
-      <p>Your cart is empty!</p>
-    <% } %>
+    </div>
   </main>
+
+  <script>
+    function updateQuantity(productId, change) {
+      fetch('/cart/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: productId, change: change })
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to update quantity');
+        }
+      });
+    }
+
+    function removeFromCart(productId) {
+      fetch('/cart/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: productId })
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to remove product from cart');
+        }
+      });
+    }
+  </script>
+
+  <style>
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quantity-btn, .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .quantity-btn.increase {
+      background-color: #4CAF50;
+    }
+
+    .quantity-btn.decrease {
+      background-color: #ff9800;
+    }
+
+    .quantity-btn:hover, .delete-btn:hover {
+      opacity: 0.8;
+    }
+
+    .payment-button {
+      background-color: #ffd400;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    .payment-button:hover {
+      opacity: 0.8;
+    }
+
+    .payment-button a {
+      color: black;
+      text-decoration: none;
+    }
+  </style>
 </body>
 </html>
