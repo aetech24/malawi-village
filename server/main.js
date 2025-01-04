@@ -49,7 +49,6 @@ router.get('/singleproducts/:id', (req, res) => {
   const product = products.find(p => p.id === productId);
 
   if (!product) {
-    // Render a 404 page if the product is not found
     return res.status(404).send('No product found');
   }
 
@@ -121,10 +120,6 @@ router.get('/', (req, res) => {
     gridProducts
 
   });
-});
-
-router.get('/cart', (req, res) => {
-  res.render('cart', { cartItems });
 });
 
 export default router;
