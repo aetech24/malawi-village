@@ -1,0 +1,122 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+
+section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+section .move-all-btn,
+section .see-all-btn {
+  float: right;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+section .move-all-btn:hover,
+section .see-all-btn:hover {
+  background-color: #444;
+}
+
+/* Product Grid */
+.favorites-grid,
+.flash-sales-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  width: 300px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-details {
+  padding: 10px;
+  text-align: center;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.product-price {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.add-to-cart-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #444;
+}
+
+/* Remove Button */
+.remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  border: none;
+  color: #ff0000;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 70%;
+  padding: 5px;
+}
+
+.remove-btn:hover {
+  background-color: #ffdddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .move-all-btn,
+  .see-all-btn {
+    float: none;
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    text-align: center;
+  }
+}

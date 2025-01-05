@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/css/flashsales.css">
+<div class="flash-sales-container">
+    <h1>Flash Sales</h1>
+    <div class="products-grid">
+      <% items.forEach(item => { %>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="<%= item.image %>" alt="<%= item.name %>">
+            <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+          </div>
+          <div class="product-details">
+            <h3><%= item.name %></h3>
+            <a href="/singleproducts/<%= item.id %>">
+              <button class="add-to-cart-btn">View Product</button>
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>

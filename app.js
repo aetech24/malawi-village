@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express from "express";
 import session from "express-session";
 import expressLayouts from "express-ejs-layouts";
@@ -11,9 +12,33 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/main");
 app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+=======
+import dotenv from 'dotenv';
+import express from 'express';
+const PORT = 5000 || process.env.PORT;
+import expressLayouts from 'express-ejs-layouts';
+import router from './server/main.js';
+const app = express();
 
+import { products } from './data/products.js';
+
+// Set EJS as the template engine
+app.set('view engine', 'ejs');
+
+// Use express ejs layouts
+app.use(expressLayouts);
+
+// Let the layout file be optional
+app.set('layout', './layouts/main');
+
+// Serving static files
+app.use(express.static('public'));
+
+// Middleware to parse JSON requests
+>>>>>>> 9b3fc57bb4bedbea0f804fed329b339bfbd1d10a
+app.use(express.json());
+
+<<<<<<< HEAD
 // Session setup
 app.use(
   session({
@@ -114,6 +139,10 @@ app.get("/cart", (req, res) => {
 
 // Use the router
 app.use("/", router);
+=======
+// App route
+app.use('/', router);
+>>>>>>> 9b3fc57bb4bedbea0f804fed329b339bfbd1d10a
 
 app.listen(PORT, () => {
   console.log(`app is listening on ${PORT}`);

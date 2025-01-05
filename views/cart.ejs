@@ -1,75 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= locals.title %></title>
+  <title>Your Shopping Cart</title>
+  <link rel="stylesheet" href="/css/cart.css">
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <a href="/">Back to Products</a>
-  </header>
-
   <main class="cart-page">
-    <h1>Your Cart</h1>
-    <% if (cart.length > 0) { %>
-      <div class="cart-container">
-        <!-- Left: Product List -->
-        <div class="cart-items">
-          <% cart.forEach(item => { %>
-            <div class="cart-item">
-              <div class="cart_item_image_container">
-                <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
-              </div>
-              <div class="cart-item-details">
-                <div class="cart_item_name">
-                  <h3>Product Name</h3>
-                  <p><%= item.name %></p>
-                </div>
-                <div class="cart_item_quantity">
-                  <h3>Product count</h3>
-                  <p><%= item.quantity %></p>
-                </div>
-                <div class="cart_item_weight">
-                  <h3>Weight lbs</h3>
-                  <p><%= item.weight %></p>
-                </div>
-                <div class="cart_item_price">
-                  <h3>Price</h3>
-                  <p>$<%= item.price %></p>
-                </div>
-              </div>
-            </div>
-          <% }) %>
-        </div>
+    <h1>Your Shopping Cart</h1>
+    <div class="cart-container">
 
-        <!-- Right: Order Summary -->
-        <div class="order-summary">
-          <h2>Order Summary</h2>
-          <div class="order_summary_subtotal">
-            <p>Subtotal</p>
-            <span>$<%= cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></span>
-          </div>
-          <div class="order_summary_price">
-            <p>Shipping</p>
-            <span>$0.00</span>
-          </div>
-          <div class="order_summary_tax">
-            <p>Tax</p>
-            <span>$0.00</span>
-          </div>
-          <hr>
-          <div class="order_summary_total">
-            <p><strong>Total</strong></p>
-            <b>$<%= cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></b>
-          </div>
-          <button class="payment-button">Proceed to Payment</button>
-        </div>
+      <!-- Left: Product List -->
+      <div class="cart-items">
+        <table>
+          <thead>
+            <tr>
+              <th>Your Items</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cartItems.forEach(item => { %>
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+                    <div class="cart-item-info">
+                      <p><strong><%= item.name %></strong></p>
+                      <p>Size: <%= item.size %></p>
+                    </div>
+                  </div>
+                </td>
+                <td>$<%= item.price %></td>
+                <td>
+                  <input type="number" value="<%= item.quantity %>" min="1" onchange="updateQuantity('<%= item.id %>', this.value)">
+                </td>
+                <td>$<%= (item.price * item.quantity).toFixed(2) %></td>
+                <td>
+                  <button class="delete-btn" onclick="removeFromCart('<%= item.id %>')">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
-    <% } else { %>
-      <p>Your cart is empty!</p>
-    <% } %>
+
+      <!-- Right: Order Summary -->
+      <div class="order-summary">
+        <h2>Your Order Summary</h2>
+        <div>
+          <p>Sub Total</p>
+          <p>$ <%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></p>
+        </div>
+        <div>
+          <p>Discount</p>
+          <p>$ 0.00</p>
+        </div>
+        <div>
+          <p>Delivery</p>
+          <p>$ 20.00</p>
+        </div>
+        <hr>
+        <div>
+          <p><strong>Total</strong></p>
+          <p><strong>$ <%= (cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 20).toFixed(2) %></strong></p>
+        </div>
+        <a href="/billing">
+        <button class="checkout-btn">
+          Proceed to Checkout
+        </button>
+      </a>
+      </div>
+    </div>
   </main>
+  <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script>
+    function updateQuantity(productId, quantity) {
+      fetch('/cart/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: productId, quantity: parseInt(quantity, 10) })
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to update quantity');
+        }
+      });
+    }
+
+    function removeFromCart(productId) {
+      fetch('/cart/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId: productId })
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to remove product from cart');
+        }
+      });
+    }
+
+    // Scroll to top button
+    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+  <style>
+    #scrollToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 50%;
+    }
+
+    #scrollToTopBtn:hover {
+      background-color: #555;
+    }
+  </style>
 </body>
 </html>

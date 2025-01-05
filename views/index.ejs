@@ -3,102 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= locals.title %></title>
+  <title><%= title %></title>
+  
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<<<<<<< HEAD
   <!-- <header>
      <a href="/cart">Cart (<span id="cart-count"><%= cartCount %></span>)</a>
   </header>  -->
 
   <!-- hero area begins here -->
+=======
+  
+>>>>>>> 9b3fc57bb4bedbea0f804fed329b339bfbd1d10a
   <div class="hero_banner">
-    <img src="/assets/hero-banner.jpg" alt="">
-
-    <div class="hero_banner_arrow">
-      <div class="left">
-        <span class="material-symbols-outlined">chevron_left</span>
-      </div>
-      <div class="right">
-        <span class="material-symbols-outlined">chevron_right</span>
-      </div>
+    <img src="/assets/hero-banner.jpg" alt="hero-img" style="opacity: 0.65;">
+    <div class="centered">
+      <h4>Malawi Village</h4>
+      <p style="color: #ffd400; font-style:italic;">Every sip feels like spring</p>
     </div>
   </div>
 
   <!-- hero area ends here -->
 
   <!-- main body -->
-  <main>
-    <div id="product-list" class="product-grid">
-      <% products.forEach(product => { %>
-        <div class="product-item">
-          <div class="product_image">
-            <!-- Make the product image clickable -->
-            <a href="/singleproducts/<%= product.id %>">
-              <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
-            </a>
-          </div>
-          <div class="product_details">
-            <h3><%= product.name %></h3>
-            <div class="product_price">
-              <p>
-                <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
-                <span>Price (S): $<%= product.price.small || 'N/A' %></span>
-              </p>
-            </div>
-            <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
-          </div>
-        </div>
-      <% }); %>
-    </div>
-  </main>
+   
 
-  <!-- main ends here -->
+   <!-- main ends here -->
 
-  <!-- cta area bns gere-->
-  <div class="cta_info">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consectetur iste ipsum, soluta officia laboriosam,
-      dolorum aspernatur facilis corporis nostrum exercitationem totam eum? Cumque assumenda asperiores commodi illum
-      debitis maiores.</p>
-  </div>
-
-  <div class="cta_container">
-    <div class="cta_content">
-      <h2>Want 10% off your first order?</h2>
-      <p>Enter your email below to <span>get 10%</span> <br> off your first order</p>
-      <form action="">
-        <input type="text" placeholder="Email Address">
-        <button class="btn view_btn">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- advantage  -->
-
-  <div class="gallery_container">
-    <div class="gallery_text">
-      <h2 class="main">Our Gallery</h2>
+   <!-- cta area bns gere-->
+    <div class="cta_info">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consectetur iste ipsum, soluta officia laboriosam,
+        dolorum aspernatur facilis corporis nostrum exercitationem totam eum? Cumque assumenda asperiores commodi illum
+        debitis maiores.</p>
     </div>
 
 
-    <div class="flash-sales-container">
-      <h1>Flash Sales</h1>
-      <div class="products-grid">
-        <% items.forEach(item => { %>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="<%= item.image %>" alt="<%= item.name %>">
-              <button class="wishlist-btn">&#x2661;</button>
-            </div>
-            <div class="product-details">
-              <h3><%= item.name %></h3>
-              <a href="/cart">
-              <button class="add-to-cart-btn">Add to Cart</button>
-            </a>
-            </div>
-          </div>
-        <% }); %>
+    <div class="cta_container">
+      <div class="cta_content">
+        <h2>Want 10% off your first order?</h2>
+        <p>Enter your email below to <span>get 10%</span> <br> off your first order</p>
+        <form action="">
+          <input type="text" placeholder="Email Address">
+          <button class="btn view_btn">Submit</button>
+        </form>
       </div>
     </div>
+  <%- include('flashsales')%>
     <!--View All button -->
     <div class="view-all-btn-container">
       <a href="/shop?category=All">
@@ -132,73 +84,169 @@
       <div class="products-card">
         <div class="product-images-container">
           <img src="<%= gridProduct.image %>" alt="<%= gridProduct.name %>" class="product-images">
-          <button class="wishlist-btns">&#x2661;</button>
+          <button class="wishlist-btns" onclick="addToWishlist('<%= gridProduct.id %>', '<%= gridProduct.name %>', '<%= gridProduct.image %>', '<%= gridProduct.price.big %>', 'L')">&#x2661;</button>
         </div>
         <div class="products-info">
           <p class="products-name"><%= gridProduct.name %></p>
           <p class="products-price">GH₵<%= gridProduct.price.toFixed(2) %></p>
-          <a href="/cart">
-          <button class="add-to-cart-btns">Add to Cart</button>
+          <a href="javascript:void(0);" onclick="addToCart('<%= gridProduct.id %>')">
+            <button class="add-to-cart-btns" onclick="addToCart('<%= gridProduct.id %>')">Add to Cart</button>
           </a>
         </div>
       </div>
     <% }); %>
   </div>
 </div>
-
+<script src="/js/cart.js"></script>
+<script src="/js/wishlist.js"></script>
+<script src="/routes/index.js"></script>
     <!-- advantage  -->
 
-    <div class="gallery_container">
+    <div class="gallery_container" style="margin-bottom: 25px;">
       <div class="gallery_text">
         <h2 class="main">Our Gallery</h2>
-
-    <div class="gallery_related_images">
-      <div class="related_images">
-        <img src="/assets/tes-img1.jpg" alt="" width="330px">
-
       </div>
-      <div class="related_images">
-        <img src="/assets/tes-img9.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img2.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img3.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img4.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img5.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img6.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img7.jpg" alt="">
-      </div>
-      <div class="related_images">
-        <img src="/assets/tes-img8.jpg" alt="">
+    
+      <div class="gallery_related_images">
+        <div class="related_images">
+          <img src="/assets/tes-img1.jpg" alt="" width="330px">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img9.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img2.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img3.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img4.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img5.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img6.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img7.jpg" alt="">
+        </div>
+        <div class="related_images">
+          <img src="/assets/tes-img8.jpg" alt="">
+        </div>
       </div>
     </div>
-  </div>
+  </main>
+
+  <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
   <script>
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-      button.addEventListener("click", async () => {
-        const productId = button.getAttribute("data-id");
+    async function addToCart(productId) {
+      // Add cart logic here
+    }
 
-        const response = await fetch("/add-to-cart", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: productId })
+    function addToWishlist(productId, name, image, price, size) {
+      fetch('/wishlist/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: productId, name, image, price, size })
+      }).then(response => response.json())
+        .then(data => {
+          console.log(data);
+          alert('Product added to wishlist');
         });
+    }
 
-        const data = await response.json();
-        document.getElementById("cart-count").textContent = data.cartCount;
-      });
-    });
+    // Scroll to top button
+    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
   </script>
+  
 </body>
 </html>
+<style>
+  .add-to-cart-btn, .add-to-cart-btns {
+    background-color: #ffd400;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .add-to-cart-btn:hover, .add-to-cart-btns:hover {
+    opacity: 0.8;
+  }
+  .hero-banner {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  .hero-banner img {
+    opacity: 0.3;
+  }
+
+  /* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+  .centered h4 {
+    font-size: 120px;
+    background: rgba(0, 0, 0, 0.384);
+    color: white;
+  }
+  .centered p {
+    font-size: 30px;
+    text-align: center;
+    font-weight: 300;
+    background: rgba(0, 0, 0, 0.384);
+  }
+
+  /* CTA area */
+  #scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+  }
+
+  #scrollToTopBtn:hover {
+    background-color: #555;
+  }
+</style>
