@@ -76,7 +76,7 @@
       <div class="products-card">
         <div class="product-images-container">
           <img src="<%= gridProduct.image %>" alt="<%= gridProduct.name %>" class="product-images">
-          <button class="wishlist-btns">&#x2661;</button>
+          <button class="wishlist-btns" onclick="addToWishlist('<%= gridProduct.id %>', '<%= gridProduct.name %>', '<%= gridProduct.image %>', '<%= gridProduct.price.big %>', 'L')">&#x2661;</button>
         </div>
         <div class="products-info">
           <p class="products-name"><%= gridProduct.name %></p>
@@ -90,7 +90,8 @@
   </div>
 </div>
 <script src="/js/cart.js"></script>
-
+<script src="/js/wishlist.js"></script>
+<script src="/routes/index.js"></script>
     <!-- advantage  -->
 
     <div class="gallery_container" style="margin-bottom: 25px;">
@@ -130,9 +131,47 @@
     </div>
   </main>
 
+  <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script>
     async function addToCart(productId) {
       // Add cart logic here
+    }
+
+    function addToWishlist(productId, name, image, price, size) {
+      fetch('/wishlist/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: productId, name, image, price, size })
+      }).then(response => response.json())
+        .then(data => {
+          console.log(data);
+          alert('Product added to wishlist');
+        });
+    }
+
+    // Scroll to top button
+    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     }
   </script>
 </body>
@@ -182,4 +221,23 @@
   }
 
   /* CTA area */
+  #scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+  }
+
+  #scrollToTopBtn:hover {
+    background-color: #555;
+  }
 </style>

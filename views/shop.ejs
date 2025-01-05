@@ -38,6 +38,18 @@
     .add-to-cart:hover {
       background-color: #218838;
     }
+
+    .wishlist-btns {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .wishlist-btns:hover {
+      color: #c0392b;
+    }
   </style>
 </head>
 <body>
@@ -47,7 +59,6 @@
 
   <!-- Category Buttons -->
   <div class="categories">
-    <h1>Malawi Village Shop</h1>
     <h2>Product Categories</h2>
     <div class="category-buttons">
       <a href="/shop?category=All">
@@ -74,6 +85,7 @@
             <a href="/singleproducts/<%= product.id %>">
               <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
             </a>
+            <button class="wishlist-btns" onclick="addToWishlist('<%= product.id %>', '<%= product.name %>', '<%= product.image %>', '<%= product.price.big %>', 'L')">&#x2661;</button>
           </div>
           <div class="product_details">
             <h3><%= product.name %></h3>
@@ -82,12 +94,14 @@
                 <button 
                   class="price-btn" 
                   data-price="<%= product.price.big %>" 
+                  data-size="L"
                   onclick="displayPrice(this, '<%= product.id %>')">
                   Price (L): $<%= product.price.big || 'N/A' %>
                 </button>
                 <button 
                   class="price-btn" 
                   data-price="<%= product.price.small %>" 
+                  data-size="S"
                   onclick="displayPrice(this, '<%= product.id %>')">
                   Price (S): $<%= product.price.small || 'N/A' %>
                 </button>
@@ -112,29 +126,57 @@
   const cart = {}; // A temporary object to store cart items
 
   function displayPrice(button, productId) {
-    // Get the price from the data attribute
+    // Get the price and size from the data attributes
     const price = button.getAttribute("data-price");
+    const size = button.getAttribute("data-size");
 
     // Update the corresponding price display element
     const priceDisplay = document.getElementById(`price-display-${productId}`);
     priceDisplay.textContent = `$${price}`;
 
-    // Update the selected price in the cart object
-    cart[productId] = { price };
+    // Update the selected price and size in the cart object
+    cart[productId] = { price, size };
   }
 
   function addToCart(productId) {
-    // Get the selected price
+    // Get the selected price and size
     const selectedPrice = cart[productId]?.price;
+    const selectedSize = cart[productId]?.size;
 
-    if (!selectedPrice) {
-      alert("Please select a price before adding to cart.");
+    if (!selectedPrice || !selectedSize) {
+      alert("Please select a price and size before adding to cart.");
       return;
     }
 
     // Simulate adding the product to the cart
-    console.log(`Product ${productId} added to cart with price $${selectedPrice}`);
-    alert(`Product added to cart with price $${selectedPrice}`);
+    console.log(`Product ${productId} added to cart with price $${selectedPrice} and size ${selectedSize}`);
+    alert(`Product added to cart with price $${selectedPrice} and size ${selectedSize}`);
+
+    // Add the product to the cart (this should be replaced with actual cart logic)
+    fetch('/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: productId, price: selectedPrice, size: selectedSize })
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
+
+  function addToWishlist(productId, name, image, price, size) {
+    fetch('/wishlist/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: productId, name, image, price, size })
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Product added to wishlist');
+      });
   }
 </script>
 
