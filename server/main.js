@@ -1,103 +1,108 @@
-import express from 'express';
-const router = express.Router();
-
-import { products } from '../data/products.js';
-import { ingredients} from '../data/ingredients.js'
+import express from "express";
+import { products } from "../data/products.js";
+import { ingredients } from "../data/ingredients.js";
 
 const cartItems = [];
 
 // Ingredients
 
-
+const router = express.Router();
 
 const app = express();
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 // Ingredients Route
-app.get('/ingredients', (req, res) => {
-  res.render('ingredients', { 
-    title: 'Ingredients',
-    description: 'Explore the essential ingredients we use in our recipes.',
+app.get("/ingredients", (req, res) => {
+  res.render("ingredients", {
+    title: "Ingredients",
+    description: "Explore the essential ingredients we use in our recipes.",
     ingredients,
     cartCount: req.session.cart.length,
-    includeAbout: false
+    includeAbout: false,
   });
 });
 
 // Shop Route
-router.get('/shop', (req, res) => {
+router.get("/shop", (req, res) => {
   const locals = {
-    title: 'Malawi Village',
-    description: 'This is Malawi Village official website',
+    title: "Malawi Village",
+    description: "This is Malawi Village official website",
   };
 
-  const selectedCategory = req.query.category || 'All'; // Default to 'All' if no category is selected
-  const filteredProducts = selectedCategory === 'All'
-    ? products
-    : products.filter(product => product.category === selectedCategory);
+  const selectedCategory = req.query.category || "All"; // Default to 'All' if no category is selected
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
 
-  res.render('shop', {
+  res.render("shop", {
     locals,
     products: filteredProducts, // Pass the filtered list
     selectedCategory, // Pass selected category for UI updates
     cartCount: req.session.cart.length,
-    includeAbout: false
+    includeAbout: false,
   });
 });
 
 // Single Product Route
-router.get('/singleproducts/:id', (req, res) => {
+router.get("/singleproducts/:id", (req, res) => {
   const productId = parseInt(req.params.id, 10); // Ensure the ID is a number
-  const product = products.find(p => p.id === productId);
+  const product = products.find((p) => p.id === productId);
 
   if (!product) {
     // Render a 404 page if the product is not found
-    return res.status(404).send('No product found');
+    return res.status(404).send("No product found");
   }
 
   const relatedProducts = products.filter(
-    p => p.category === product.category && p.id !== product.id
+    (p) => p.category === product.category && p.id !== product.id
   );
 
-
-  res.render('singleproducts', { 
-    product, 
+  res.render("singleproducts", {
+    product,
     relatedProducts,
     ingredients,
-    cartCount: req.session.cart.length, 
-    includeAbout: false
+    cartCount: req.session.cart.length,
+    includeAbout: false,
   });
-
-
+});
 
 // Other Routes
-router.get('/about', (req, res) => {
-  res.render('about', { cartCount: req.session.cart.length, includeAbout: true });
+router.get("/about", (req, res) => {
+  res.render("about", {
+    cartCount: req.session.cart.length,
+    includeAbout: true,
+  });
 });
-router.get('/login',(req,res)=>{
-  res.render('login')
-})
-router.get('/signup', (req,res) =>{
-  res.render('signup')
-})
-
-router.get('/testimonial', (req, res) => {
-  res.render('testimonial', { cartCount: req.session.cart.length, includeAbout: true });
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+router.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
-router.get('/contact', (req, res) => {
-  res.render('contact', { cartCount: req.session.cart.length, includeAbout: false });
+router.get("/testimonial", (req, res) => {
+  res.render("testimonial", {
+    cartCount: req.session.cart.length,
+    includeAbout: true,
+  });
+});
+
+router.get("/contact", (req, res) => {
+  res.render("contact", {
+    cartCount: req.session.cart.length,
+    includeAbout: false,
+  });
 });
 
 // Route to display products
-router.get('/', (req, res) => {
-
+router.get("/", (req, res) => {
   const items = [
-    { name: 'Malawi Juice', image: '/assets/image-1.jpg' },
-    { name: 'Orange Juice', image: '/assets/image-2.jpg' },
-    { name: 'Watermelon Drink', image: '/assets/image-3.jpg' },
-    { name: 'Coca-Cola', image: '/assets/image-4.jpg' },
+    { name: "Malawi Juice", image: "/assets/image-1.jpg" },
+    { name: "Orange Juice", image: "/assets/image-2.jpg" },
+    { name: "Watermelon Drink", image: "/assets/image-3.jpg" },
+    { name: "Coca-Cola", image: "/assets/image-4.jpg" },
   ];
   const gridProducts = [
     {
@@ -120,26 +125,30 @@ router.get('/', (req, res) => {
       price: 120.0,
       image: "/assets/image-4.jpg",
     },
-    
   ];
-  res.render('index',{items, 
-    backgroundImage: '/assets/image-6.jpg', // Path to your background image
-    productImage: '/assets/image-6.jpg', // Path to the product image
-    buttonLink: '/shop',
-    gridProducts
-
+  res.render("index", {
+    gridProducts,
+    items,
+    backgroundImage: "/assets/image-6.jpg", // Path to your background image
+    productImage: "/assets/image-6.jpg", // Path to the product image
+    buttonLink: "/shop",
+    gridProducts,
   });
 
   const locals = {
-    title: 'Malawi Village',
-    description: 'Welcome to Malawi Village',
+    title: "Malawi Village",
+    description: "Welcome to Malawi Village",
   };
-  res.render('index', { locals, products, cartCount: req.session.cart.length, includeAbout: true });
-
+  res.render("index", {
+    locals,
+    products,
+    cartCount: req.session.cart.length,
+    includeAbout: true,
+  });
 });
 
 // Route to add to cart
-router.post('/add-to-cart', (req, res) => {
+router.post("/add-to-cart", (req, res) => {
   const { id } = req.body;
   const product = products.find((p) => p.id == id);
 
@@ -156,12 +165,17 @@ router.post('/add-to-cart', (req, res) => {
 });
 
 // Route to display cart
-router.get('/cart', (req, res) => {
+router.get("/cart", (req, res) => {
   const locals = {
-    title: 'Your Cart',
-    description: 'Review your cart items',
+    title: "Your Cart",
+    description: "Review your cart items",
   };
-  res.render('cart', { locals, cart: req.session.cart, cartCount: req.session.cart.length, includeAbout: false });
+  res.render("cart", {
+    locals,
+    cart: req.session.cart,
+    cartCount: req.session.cart.length,
+    includeAbout: false,
+  });
 });
 
 export default router;
