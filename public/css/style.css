@@ -421,7 +421,7 @@ main h2, .main {
   position: relative;
   width: 70%;
   height: 400px;
-  background-image: linear-gradient(#00000048, #00000048), url(/assets/image-3.jpg);
+  background-image: linear-gradient(#00000098, #0000008a), url(/assets/image-3.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -446,13 +446,13 @@ main h2, .main {
   left: 20%;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 5px;
-} */
+} 
 
  .cta_content h2 {
   font-size: var(--header-fonts-2);
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--primary-color);
+  color: #c89c02;
 }
 
 .cta_content p {
@@ -460,11 +460,35 @@ main h2, .main {
   color: white;
   margin-bottom: 10px;
 }
+.cta_container .cta_content form button{
+  width: 100px;
+  padding: 10px;
+  background-color: #c89c02;
+  color: rgb(34, 34, 34);
+  cursor: pointer;
+}
+.cta_container .cta_content form button:hover{
+  background-color: #c89d02c7;
+  color: white;
+}
+.cta_container .cta_content form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.cta_container .cta_content form input{
+  padding: 10px;
+  width: 50%;
+  border: none;
+  border-radius: 5px;
+}
 
 .cta_content p span {
   font-size: 20px;
   font-weight: 600;
   color: black;
+  font-weight: 600;
 } */
 
 
