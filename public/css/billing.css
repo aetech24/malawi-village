@@ -1,0 +1,107 @@
+.billing-page {
+    padding: 20px;
+  }
+  
+  .billing-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .billing-form,
+  .order-summary {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .billing-form {
+    flex: 2;
+  }
+  
+  .billing-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .billing-form input[type="text"],
+  .billing-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .billing-form .save-info {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .order-summary {
+    flex: 1;
+  }
+  
+  .order-summary h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  
+  .summary-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .summary-item-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .summary-item-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .summary-subtotal,
+  .summary-shipping,
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .payment-methods {
+    margin-top: 20px;
+  }
+  .payment-icon{
+    width: 80px;
+  }
+  
+  .payment-methods label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .place-order-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .place-order-btn:hover {
+    background-color: #444;
+  }

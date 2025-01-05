@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+  
   <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <a href="/cart">Cart (<span id="cart-count"><%= cartCount || 0 %></span>)</a>
-  </header>
   
   <div class="hero_banner">
     <img src="/assets/hero-banner.jpg" alt="hero-img" style="opacity: 0.65;">
@@ -44,26 +42,7 @@
         </form>
       </div>
     </div>
-
-    <div class="flash-sales-container">
-      <h1>Flash Sales</h1>
-      <div class="products-grid">
-        <% items.forEach(item => { %>
-          <div class="product-card">
-            <div class="product-image">
-              <img src="<%= item.image %>" alt="<%= item.name %>">
-              <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-            </div>
-            <div class="product-details">
-              <h3><%= item.name %></h3>
-              <a href="/singleproducts/<%= item.id %>">
-                <button class="add-to-cart-btn">View Product</button>
-              </a>
-            </div>
-          </div>
-        <% }); %>
-      </div>
-    </div>
+  <%- include('flashsales')%>
     <!--View All button -->
     <div class="view-all-btn-container">
       <a href="/shop?category=All">
@@ -103,13 +82,14 @@
           <p class="products-name"><%= gridProduct.name %></p>
           <p class="products-price">GH₵<%= gridProduct.price.toFixed(2) %></p>
           <a href="javascript:void(0);" onclick="addToCart('<%= gridProduct.id %>')">
-            <button class="add-to-cart-btns">Add to Cart</button>
+            <button class="add-to-cart-btns" onclick="addToCart('<%= gridProduct.id %>')">Add to Cart</button>
           </a>
         </div>
       </div>
     <% }); %>
   </div>
 </div>
+<script src="/js/cart.js"></script>
 
     <!-- advantage  -->
 
@@ -157,7 +137,6 @@
   </script>
 </body>
 </html>
-
 <style>
   .add-to-cart-btn, .add-to-cart-btns {
     background-color: #ffd400;

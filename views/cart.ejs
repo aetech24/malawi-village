@@ -3,82 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart</title>
-  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+  <title>Your Shopping Cart</title>
   <link rel="stylesheet" href="/css/cart.css">
+  <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <main class="cart-page">
-    <h1>Cart</h1>
+    <h1>Your Shopping Cart</h1>
     <div class="cart-container">
+
       <!-- Left: Product List -->
       <div class="cart-items">
-        <% cartItems.forEach(item => { %>
-          <div class="cart-item">
-            <div class="cart_item_image_container">
-              <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
-            </div>
-            <div class="cart-item-details">
-              <div class="cart_item_name">
-                <h3>Product Name</h3>
-                <p><%= item.name %></p>
-              </div>
-              <div class="cart_item_quantity">
-                <h3>Product count</h3>
-                <p><%= item.quantity %></p>
-                <button class="quantity-btn increase" onclick="updateQuantity('<%= item.id %>', 1)">+</button>
-                <button class="quantity-btn decrease" onclick="updateQuantity('<%= item.id %>', -1)">-</button>
-              </div>
-              <div class="cart_item_weight">
-                <h3>Weight lbs</h3>
-                <p><%= item.weight %></p>
-              </div>
-              <div class="cart_item_price">
-                <h3>Price</h3>
-                <p>$<%= item.price %></p>
-              </div>
-              <div class="cart_item_actions">
-                <button class="delete-btn" onclick="removeFromCart('<%= item.id %>')">Remove</button>
-              </div>
-            </div>
-          </div>
-        <% }) %>
+        <table>
+          <thead>
+            <tr>
+              <th>Your Items</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cartItems.forEach(item => { %>
+              <tr>
+                <td>
+                  <div class="cart-item">
+                    <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+                    <div class="cart-item-info">
+                      <p><strong><%= item.name %></strong></p>
+                      <p>Size: <%= item.size %></p>
+                    </div>
+                  </div>
+                </td>
+                <td>$<%= item.price %></td>
+                <td>
+                  <input type="number" value="<%= item.quantity %>" min="1" onchange="updateQuantity('<%= item.id %>', this.value)">
+                </td>
+                <td>$<%= (item.price * item.quantity).toFixed(2) %></td>
+                <td>
+                  <button class="delete-btn" onclick="removeFromCart('<%= item.id %>')">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
+
       <!-- Right: Order Summary -->
       <div class="order-summary">
-        <h2>Order Summary</h2>
-        <div class="order_summary_subtotal">
-          <p>Subtotal</p>
-          <span>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></span>
+        <h2>Your Order Summary</h2>
+        <div>
+          <p>Sub Total</p>
+          <p>$ <%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></p>
         </div>
-        <div class="order_summary_price">
-          <p>Shipping</p>
-          <span>$0.00</span>
+        <div>
+          <p>Discount</p>
+          <p>$ 0.00</p>
         </div>
-        <div class="order_summary_tax">
-          <p>Tax</p>
-          <span>$0.00</span>
+        <div>
+          <p>Delivery</p>
+          <p>$ 20.00</p>
         </div>
         <hr>
-        <div class="order_summary_total">
+        <div>
           <p><strong>Total</strong></p>
-          <b>$<%= cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) %></b>
+          <p><strong>$ <%= (cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 20).toFixed(2) %></strong></p>
         </div>
-        <div class="order_btn">
-          <button class="payment-button"><a href="/checkout">Proceed to Payment</a></button>
-        </div>
+        <a href="/billing">
+        <button class="checkout-btn">
+          Proceed to Checkout
+        </button>
+      </a>
       </div>
     </div>
   </main>
 
   <script>
-    function updateQuantity(productId, change) {
+    function updateQuantity(productId, quantity) {
       fetch('/cart/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ productId: productId, change: change })
+        body: JSON.stringify({ productId: productId, quantity: parseInt(quantity, 10) })
       }).then(response => {
         if (response.ok) {
           location.reload();
@@ -104,63 +114,6 @@
       });
     }
   </script>
-
-  <style>
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .cart-item-details {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .quantity-btn, .delete-btn {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 3px;
-    }
-
-    .quantity-btn.increase {
-      background-color: #4CAF50;
-    }
-
-    .quantity-btn.decrease {
-      background-color: #ff9800;
-    }
-
-    .quantity-btn:hover, .delete-btn:hover {
-      opacity: 0.8;
-    }
-
-    .payment-button {
-      background-color: #ffd400;
-      color: black;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 5px;
-    }
-
-    .payment-button:hover {
-      opacity: 0.8;
-    }
-
-    .payment-button a {
-      color: black;
-      text-decoration: none;
-    }
-  </style>
 </body>
 </html>
+ 

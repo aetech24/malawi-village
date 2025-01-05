@@ -5,6 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop</title>
   <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
+  <style>
+    .price-btn {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .price-btn:hover {
+      background-color: #e6e6e6;
+    }
+
+    .selected-price {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .add-to-cart {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .add-to-cart:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
 <main>
@@ -37,7 +71,6 @@
       <% products.forEach(product => { %>
         <div class="product-item">
           <div class="product_image">
-            <!-- Make the product image clickable -->
             <a href="/singleproducts/<%= product.id %>">
               <img src="<%= product.image %>" alt="<%= product.name %>" class="product-img">
             </a>
@@ -46,9 +79,22 @@
             <h3><%= product.name %></h3>
             <div class="product_price">
               <p>
-                <span>Price (L): $<%= product.price.big || 'N/A' %> </span>
-                <span>Price (S): $<%= product.price.small || 'N/A' %></span>
+                <button 
+                  class="price-btn" 
+                  data-price="<%= product.price.big %>" 
+                  onclick="displayPrice(this, '<%= product.id %>')">
+                  Price (L): $<%= product.price.big || 'N/A' %>
+                </button>
+                <button 
+                  class="price-btn" 
+                  data-price="<%= product.price.small %>" 
+                  onclick="displayPrice(this, '<%= product.id %>')">
+                  Price (S): $<%= product.price.small || 'N/A' %>
+                </button>
               </p>
+              <div class="selected-price">
+                Selected Price: <span id="price-display-<%= product.id %>">N/A</span>
+              </div>
             </div>
             <a href="javascript:void(0);" onclick="addToCart('<%= product.id %>')">
               <button class="add-to-cart">Add to Cart</button>
@@ -62,8 +108,39 @@
   <% } %>
 </main>
 
-<script src="/js/cart.js"></script>
+<script>
+  const cart = {}; // A temporary object to store cart items
 
+  function displayPrice(button, productId) {
+    // Get the price from the data attribute
+    const price = button.getAttribute("data-price");
+
+    // Update the corresponding price display element
+    const priceDisplay = document.getElementById(`price-display-${productId}`);
+    priceDisplay.textContent = `$${price}`;
+
+    // Update the selected price in the cart object
+    cart[productId] = { price };
+  }
+
+  function addToCart(productId) {
+    // Get the selected price
+    const selectedPrice = cart[productId]?.price;
+
+    if (!selectedPrice) {
+      alert("Please select a price before adding to cart.");
+      return;
+    }
+
+    // Simulate adding the product to the cart
+    console.log(`Product ${productId} added to cart with price $${selectedPrice}`);
+    alert(`Product added to cart with price $${selectedPrice}`);
+  }
+</script>
+
+<script src="/js/cart.js"></script>
+</body>
+</html>
 <style>
   .add-to-cart {
     background-color: #ffd400;

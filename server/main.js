@@ -1,6 +1,6 @@
 import express from 'express';
+import session from 'express-session';
 const router = express.Router();
-
 import { products } from '../data/products.js';
 import { ingredients } from '../data/ingredients.js';
 
@@ -12,8 +12,9 @@ app.set('view engine', 'ejs');
 
 // Middleware to initialize session cart
 app.use((req, res, next) => {
-  if (!req.session) req.session = {};
-  if (!req.session.cart) req.session.cart = [];
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
   next();
 });
 
@@ -55,32 +56,62 @@ router.get('/singleproducts/:id', (req, res) => {
   const product = products.find(p => p.id === productId);
 
   if (!product) {
-    return res.status(404).send('No product found');
+    return res.status(404).send('Product not found');
   }
 
-  const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id);
+  const relatedProducts = products.filter(
+    p => p.category === product.category && p.id !== productId
+  );
 
   res.render('singleproducts', { 
-    product, 
+    product,
     relatedProducts,
-    ingredients,
+    ingredients: product.ingredients || [],
     cartItemCount: cartItems.length,
-    cartCount: req.session.cart.length,
+    cartCount: cartItems.length,
     includeAbout: false,
   });
 });
 
 // Cart Routes
+router.get('/cart', (req, res) => {
+  const locals = {
+    title: 'Your Cart',
+    description: 'Review your cart items',
+  };
+
+  res.render('cart', {
+    locals,
+    cartItems,
+    cartItemCount: cartItems.length,
+    includeAbout: false,
+  });
+});
+
 router.post('/cart/add', (req, res) => {
-  const { productId } = req.body;
+  const { productId, size } = req.body; // Expect `size` ("big" or "small") in the request
   const product = products.find(p => p.id === parseInt(productId, 10));
+
   if (product) {
-    const existingItem = cartItems.find(item => item.id === productId);
+    const selectedPrice = size === 'big' ? product.price.big : product.price.small;
+    const weight = size === 'big' ? 2 : 1;
+
+    const existingItem = cartItems.find(
+      item => item.id === parseInt(productId, 10) && item.size === size
+    );
+
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
-      cartItems.push({ ...product, quantity: 1 });
+      cartItems.push({
+        ...product,
+        size,
+        selectedPrice,
+        weight,
+        quantity: 1,
+      });
     }
+
     res.status(200).json({ message: 'Product added to cart', cartItemCount: cartItems.length });
   } else {
     res.status(404).json({ message: 'Product not found' });
@@ -88,13 +119,20 @@ router.post('/cart/add', (req, res) => {
 });
 
 router.post('/cart/update', (req, res) => {
-  const { productId, change } = req.body;
-  const item = cartItems.find(item => item.id === parseInt(productId, 10));
+  const { productId, size, change } = req.body; 
+  const item = cartItems.find(
+    item => item.id === parseInt(productId, 10) && item.size === size
+  );
+
   if (item) {
     item.quantity += change;
+
     if (item.quantity <= 0) {
-      cartItems = cartItems.filter(item => item.id !== productId);
+      cartItems = cartItems.filter(
+        item => item.id !== parseInt(productId, 10) || item.size !== size
+      );
     }
+
     res.status(200).json({ message: 'Quantity updated', cartItemCount: cartItems.length });
   } else {
     res.status(404).json({ message: 'Item not found in cart' });
@@ -102,9 +140,17 @@ router.post('/cart/update', (req, res) => {
 });
 
 router.post('/cart/remove', (req, res) => {
-  const { productId } = req.body;
-  cartItems = cartItems.filter(item => item.id !== parseInt(productId, 10));
+  const { productId, size } = req.body; 
+  cartItems = cartItems.filter(
+    item => item.id !== parseInt(productId, 10) || item.size !== size
+  );
+
   res.status(200).json({ message: 'Product removed from cart', cartItemCount: cartItems.length });
+});
+
+// Billing details route
+router.get('/billing', (req, res) => {
+  res.render('billing', { cartItemCount: cartItems.length, cartItems });
 });
 
 // Other Routes
@@ -131,16 +177,16 @@ router.get('/contact', (req, res) => {
 // Home Route
 router.get('/', (req, res) => {
   const items = [
-    { name: 'Malawi Juice', image: '/assets/image-1.jpg' },
-    { name: 'Orange Juice', image: '/assets/image-2.jpg' },
-    { name: 'Watermelon Drink', image: '/assets/image-3.jpg' },
-    { name: 'Coca-Cola', image: '/assets/image-4.jpg' },
+    { id: 1, name: 'Malawi Juice', image: '/assets/image-1.jpg' },
+    { id: 2, name: 'Orange Juice', image: '/assets/image-2.jpg' },
+    {  id: 3, name: 'Watermelon Drink', image: '/assets/image-3.jpg' },
+    { id: 4, name: 'Coca-Cola', image: '/assets/image-4.jpg' },
   ];
   const gridProducts = [
-    { name: "Strawberry Juice", price: 120.0, image: "/assets/image-5.jpg" },
-    { name: "Cocktail Drink", price: 120.0, image: "/assets/image-2.jpg" },
-    { name: "Milkshake", price: 120.0, image: "/assets/image-3.jpg" },
-    { name: "Hot Cocoa", price: 120.0, image: "/assets/image-4.jpg" },
+    { id: 1, name: "Strawberry Juice", price: 120.0, image: "/assets/image-5.jpg" },
+    { id: 2, name: "Cocktail Drink", price: 120.0, image: "/assets/image-2.jpg" },
+    { id: 3, name: "Milkshake", price: 120.0, image: "/assets/image-3.jpg" },
+    { id: 4, name: "Hot Cocoa", price: 120.0, image: "/assets/image-4.jpg" },
   ];
   res.render('index', {
     title: 'Malawi Village',
