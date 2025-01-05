@@ -8,28 +8,31 @@
   <script src="https://kit.fontawesome.com/6dc24a4f9f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <main class="wishlist-page">
-    <h1>Your Wishlist</h1>
-    <div class="wishlist-container">
-      <% if (wishlistItems && wishlistItems.length > 0) { %>
-        <div class="wishlist-items">
+  <main>
+    <!-- Favorites Section -->
+    <section class="favorites-section">
+      <h2>Favorites (<%= wishlistItems.length %>)</h2>
+      <button class="move-all-btn">Move All to Cart</button>
+      <div class="favorites-grid">
+        <% if (wishlistItems.length > 0) { %>
           <% wishlistItems.forEach(item => { %>
-            <div class="wishlist-item">
-              <img src="<%= item.image %>" alt="<%= item.name %>" class="wishlist-item-image">
-              <div class="wishlist-item-info">
-                <h3><%= item.name %></h3>
-                <p>Price: $<%= item.price %></p>
-                <p>Size: <%= item.size %></p>
-                <button class="remove-btn" onclick="removeFromWishlist('<%= item.id %>')">Remove</button>
+            <div class="product-card">
+              <img src="<%= item.image %>" alt="<%= item.name %>">
+              <div class="product-details">
+                <h3 class="product-name"><%= item.name %></h3>
+                <p class="product-price">GH₵<%= item.price.big %></p>
+                <button class="add-to-cart-btn" onclick="addToCart('<%= item.id %>')">Add to Cart</button>
               </div>
+              <button class="remove-btn" onclick="removeFromWishlist('<%= item.id %>')">🗑</button>
             </div>
           <% }) %>
-        </div>
-      <% } else { %>
-        <p>Your wishlist is empty.</p>
-      <% } %>
-    </div>
+        <% } else { %>
+          <p>Your wishlist is empty.</p>
+        <% } %>
+      </div>
   </main>
+  <script src="/js/cart.js"></script>
+  <script src="/js/wishlist.js"></script>
 
   <script>
     function removeFromWishlist(productId) {
@@ -43,7 +46,7 @@
         if (response.ok) {
           location.reload();
         } else {
-          alert('Failed to remove product from wishlist');
+          alert('Removed from wishlist');
         }
       });
     }

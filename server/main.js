@@ -147,7 +147,61 @@ router.post('/cart/remove', (req, res) => {
 
   res.status(200).json({ message: 'Product removed from cart', cartItemCount: cartItems.length });
 });
+//wishlist route
+let wishlistItems = []; // Temporary in-memory wishlist
 
+// Add to Wishlist Route
+router.post('/wishlist/add', (req, res) => {
+  const { productId } = req.body;
+  const product = products.find(p => p.id === parseInt(productId, 10));
+
+  if (product) {
+    const exists = wishlistItems.some(item => item.id === product.id);
+    if (!exists) {
+      wishlistItems.push(product);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Product added to wishlist',
+      wishlistItemCount: wishlistItems.length,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: 'Product not found',
+    });
+  }
+});
+router.get('/wishlist',(req,res)=>{
+  res.render('wishlist',{
+    title: 'Your Wishlist',
+    wishlistItems,
+    cartItemCount: cartItems.length,
+
+  })
+})
+// Remove from Wishlist Route
+router.post('/wishlist/remove', (req, res) => {
+  const { productId } = req.body;
+
+  const productIndex = wishlistItems.findIndex(item => item.id === parseInt(productId, 10));
+
+  if (productIndex !== -1) {
+    wishlistItems.splice(productIndex, 1);
+
+    res.status(200).json({
+      success: true,
+      message: 'Product removed from wishlist',
+      wishlistItemCount: wishlistItems.length,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: 'Product not found in wishlist',
+    });
+  }
+});
 // Billing details route
 router.get('/billing', (req, res) => {
   res.render('billing', { cartItemCount: cartItems.length, cartItems });
