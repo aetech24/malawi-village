@@ -7,6 +7,7 @@ import { ingredients } from "../data/ingredients.js";
 let cartItems = [];
 
 // Initialize the app
+// Initialize the app
 const app = express();
 app.set("view engine", "ejs");
 
@@ -25,6 +26,7 @@ router.get("/ingredients", (req, res) => {
     description: "Explore the essential ingredients we use in our recipes.",
     ingredients,
     cartCount: req.session.cart.length,
+    includeAbout: false,
     includeAbout: false,
   });
 });
