@@ -12,7 +12,7 @@
     <!-- Favorites Section -->
     <section class="favorites-section">
       <h2>Favorites (<%= wishlistItems.length %>)</h2>
-      <button class="move-all-btn">Move All to Cart</button>
+      <button class="move-all-btn" onclick="moveAllToCart()">Move All to Cart</button>
       <div class="favorites-grid">
         <% if (wishlistItems.length > 0) { %>
           <% wishlistItems.forEach(item => { %>
@@ -20,7 +20,7 @@
               <img src="<%= item.image %>" alt="<%= item.name %>">
               <div class="product-details">
                 <h3 class="product-name"><%= item.name %></h3>
-                <p class="product-price">GH₵<%= item.price.big %></p>
+                <p class="product-price">GH₵<%= typeof item.price === 'object' ? item.price.big : parseFloat(item.price).toFixed(2) %></p>
                 <button class="add-to-cart-btn" onclick="addToCart('<%= item.id %>')">Add to Cart</button>
               </div>
               <button class="remove-btn" onclick="removeFromWishlist('<%= item.id %>')">🗑</button>
@@ -49,6 +49,27 @@
           alert('Removed from wishlist');
         }
       });
+    }
+
+    function moveAllToCart() {
+      fetch('/wishlist/moveAllToCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('All items moved to cart');
+            location.reload();
+          } else {
+            alert('Failed to move items to cart');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while moving items to cart');
+        });
     }
   </script>
 </body>
